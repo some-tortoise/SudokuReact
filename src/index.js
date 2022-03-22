@@ -1,16 +1,59 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-class App extends React.Component{
-  render() {
+import "./styles.css";
+
+class Square extends React.Component{
+  render(){
     return(
       <>
-        <div className="App">
-          <h1> Hello, world! </h1>
-        </div>
+        <input className = "square" />
       </>
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+
+class Board extends React.Component{
+
+  renderSquare(i) {
+    return <td className={i} key={i}><Square /></td>;
+  }
+
+  renderRow(rowSize,i) {
+    let returnStatement = [];
+    for (var j = 0; j < rowSize; j++) {
+      returnStatement.push( this.renderSquare(i*rowSize+j) );
+    }
+    return <tr key={i} className={i}>{returnStatement}</tr>;
+  }
+
+  renderBoard(boardWidth) {
+    let board = [];
+    for (var i = 0; i < boardWidth; i++) {
+      board.push( this.renderRow(boardWidth,i) );
+    }
+    return <tbody>{board}</tbody>;
+  }
+
+
+  render() {
+    return(
+      <table>{this.renderBoard(9)}</table>
+    );
+
+
+  }
+}
+
+class Game extends React.Component{
+  render(){
+    return(
+      <>
+        <Board />
+      </>
+    );
+  }
+}
+
+ReactDOM.render(<Game />, document.getElementById("root"));
