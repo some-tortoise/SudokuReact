@@ -7,17 +7,31 @@ class Square extends React.Component{
   render(){
     return(
       <>
-        <input className = "square" />
+        <input maxLength = "1" className = "square" />
       </>
     );
   }
 }
 
-
 class Board extends React.Component{
 
+  renderBoxBorders(i){
+    let returnStatement="";
+    if (i%3==2 && (i%9 != 8)) {
+      returnStatement += "rightBorder ";
+    }
+
+    if(Math.floor(i/9)%3==2 && Math.floor(i/9) != 8){
+      returnStatement += "bottomBorder ";
+    }
+
+    console.log(i+": "+returnStatement);
+
+    return returnStatement;
+  }
+
   renderSquare(i) {
-    return <td className={i} key={i}><Square /></td>;
+    return <td className={"sq"+i+" "+this.renderBoxBorders(i)} key={i}><Square /></td>;
   }
 
   renderRow(rowSize,i) {
@@ -25,7 +39,7 @@ class Board extends React.Component{
     for (var j = 0; j < rowSize; j++) {
       returnStatement.push( this.renderSquare(i*rowSize+j) );
     }
-    return <tr key={i} className={i}>{returnStatement}</tr>;
+    return <tr key={i} className={"row"+i}>{returnStatement}</tr>;
   }
 
   renderBoard(boardWidth) {
@@ -39,7 +53,7 @@ class Board extends React.Component{
 
   render() {
     return(
-      <table>{this.renderBoard(9)}</table>
+      <table cellSpacing="0">{this.renderBoard(9)}</table>
     );
 
 
@@ -57,3 +71,11 @@ class Game extends React.Component{
 }
 
 ReactDOM.render(<Game />, document.getElementById("root"));
+
+const $input = document.querySelector("#birthnumber");
+const BIRTHNUMBER_ALLOWED_CHARS_REGEXP = /[0-9\/]+/;
+$input.addEventListener("keypress", event => {
+  if (!BIRTHNUMBER_ALLOWED_CHARS_REGEXP.test(event.key)) {
+    event.preventDefault();
+  }
+});
