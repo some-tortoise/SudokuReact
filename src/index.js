@@ -31,7 +31,13 @@ class Square extends React.Component{
   render(){
     return(
       <>
-        <input maxLength = "1" className = {"input-sq-"+this.props.value+" square "+board.isBaseValue(this.props.value)} readOnly={board.isReadOnly(this.props.value)} pattern="[0-9]" value={board.getBoardValAtSq(this.props.value)}/>
+        <input
+        maxLength = "1"
+        className = {"input-sq-"+this.props.value+" square "+board.isBaseValue(this.props.value)}
+        readOnly={board.isReadOnly(this.props.value)}
+        pattern="[0-9]"
+        value={board.getBoardValAtSq(this.props.value)}
+        />
       </>
     );
   }
@@ -84,8 +90,10 @@ class Board extends React.Component{
 
 class SolveButton extends React.Component{
   handleClick() {
-    solver.solveStep();
-    //solver.printLastBoard()
+    solver.solve();
+    solver.setBoardToSolvedBoard();
+    updateBoard();
+    console.log("updatin'...");
   }
 
   render(){
@@ -108,6 +116,11 @@ class Game extends React.Component{
 
 ReactDOM.render(<Game />, document.getElementById("root"));
 
+function updateBoard() {
+  for (var i = 0; i < $("input").length; i++) {
+    $("input")[i].value = board.getBoardValAtSq(i) != undefined ? board.getBoardValAtSq(i) : null;
+  }
+}
 
 //LIMIT INPUT TO NUMBERS USING JQUERY EVENT LISTENERS
 
@@ -116,6 +129,11 @@ $("input").on("keydown", function (e) {
     $(this).prop("readOnly",true);
   } else if(event.key >= 1 && event.key <= 9){
     $(this)[0].value = event.key;
+    let inputNum = parseInt($(this)[0].className.match(/\d/g).join(""));
+    board.getBoard()[Math.floor(inputNum/9)][inputNum%9] = parseInt(event.key);
+  } else if (event.keyCode == 8){
+    let inputNum = parseInt($(this)[0].className.match(/\d/g).join(""));
+    board.getBoard()[Math.floor(inputNum/9)][inputNum%9] = 0;
   }
 });
 

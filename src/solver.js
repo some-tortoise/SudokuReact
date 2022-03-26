@@ -1,14 +1,13 @@
 import * as board from "./boardGenerator.js";
 
-let a=0;
-let depth = 0;
+let a;
+let depth;
 let location;
-let newValue = 1;
-let lastTestFailed = false;
-let solved = false;
-let currentBoard = extractArray(board.getBoard());
-
-console.log("solvin'...");
+let newValue;
+let lastTestFailed;
+let solved;
+let solvable;
+let currentBoard;
 
 function getNumOfZeroes() {
   let numOfZeroes = 0;
@@ -27,26 +26,71 @@ function findFirstZero() {
   }
   return -1;
 }
-console.log(getNumOfZeroes());
-let history = new Array(getNumOfZeroes()+1).fill(null);
-//each point in history will hold the array at that point alongside the location of the square changed at that depth and the new value entered
-for (var i = 0; i < history.length; i++) {
-  history[i] = new Array(3).fill(null);
+
+let history;
+
+export function solve(){
+  console.log("solvin'...");
+  console.log(board.getBoard());
+  currentBoard = extractArray(board.getBoard());
+  a=0;
+  depth=0;
+  newValue=1;
+  lastTestFailed=false;
+  solved=false;
+  solvable=true;
+  history = new Array(getNumOfZeroes()+1).fill(null);
+  for (var i = 0; i < history.length; i++) {
+    history[i] = new Array(3).fill(null);
+  }
+
+  //input the starting board
+  history[0][0] = board.getBoard();
+  if(!thereAreNoHorizontalCollisionsAtAll()){
+    console.log("There are Horizontal Collisions");
+  }
+  if(!thereAreNoVerticalCollisionsAtAll()){
+    console.log("There are Vertical Collisions");
+  }
+  if(!thereAreNoInSqCollisionsAtAll()){
+    console.log("There are In-Square Collisions");
+  }
+  if(
+    thereAreNoHorizontalCollisionsAtAll() &&
+    thereAreNoVerticalCollisionsAtAll() &&
+    thereAreNoInSqCollisionsAtAll()
+  ){
+    while(!solved && a<10000 && solvable){
+      a+=1;
+      solveStep();
+    }
+    if(!solvable){
+      depth = 0;
+      currentBoard = extractArray(board.getBoard());
+      alert("The board was not solvable from that state");
+    }
+    if(a>=10000){
+      alert("something went wrong");
+    }
+  }else{
+    alert("The board was not solvable from that state");
+  }
+
+
 }
-//input the starting board
-history[0][0] = board.getBoard();
 
-
-
-while(!solved && a<10000){
-  a+=1;
-  solveStep();
+export function setBoardToSolvedBoard(){
+  currentBoard = history[depth][0];
+  console.log(currentBoard);
+  board.setBoard(extractArray(currentBoard));
 }
-
-currentBoard = history[depth][0];
-board.setBoard(extractArray(currentBoard));
 
 export function solveStep() {
+
+    if(depth <= -1){
+      solvable = false;
+      return;
+    }
 
     if(findFirstZero() != -1){
       depth += 1;
@@ -85,21 +129,81 @@ export function solveStep() {
       lastTestFailed = false;
     }
 
-    if(!isBoardBroken() && findFirstZero() == -1){
+    if(depth >= 0 && !isBoardBroken() && findFirstZero() == -1){
       solved = true;
       console.log("solved!");
     }
 }
 
 function isBoardBroken() {
-  if(thereAreNoHorizontalCollisions() && thereAreNoVerticalCollisions() && thereAreNoInSqCollisions()){
+  if(thereAreNoHorizontalCollisionsWithChange() && thereAreNoVerticalCollisionsWithChange() && thereAreNoInSqCollisionsWithChange()){
     return(false);
   }else{
     return(true);
   }
 }
 
-function thereAreNoHorizontalCollisions() {
+function thereAreNoHorizontalCollisionsAtAll() {
+  let count = Array(9).fill(0);
+  for (var i = 0; i < 9; i++) {
+    for (var j = 0; j < 9; j++) {
+      if (board.getBoard()[i][j] != 0){
+        count[board.getBoard()[i][j]-1]++;
+      }
+    }
+
+    if (count.every(el => el <= 1)) {
+      count = Array(9).fill(0);
+    }else{
+      return false;
+    }
+
+  }
+
+  return true;
+}
+
+function thereAreNoVerticalCollisionsAtAll() {
+  let count = Array(9).fill(0);
+  for (var i = 0; i < 9; i++) {
+    for (var j = 0; j < 9; j++) {
+      if (board.getBoard()[j][i] != 0){
+        count[board.getBoard()[j][i]-1]++;
+      }
+    }
+
+    if (count.every(el => el <= 1)) {
+      count = Array(9).fill(0);
+    }else{
+      return false;
+    }
+
+  }
+
+  return true;
+}
+
+function thereAreNoInSqCollisionsAtAll() {
+  let count = Array(9).fill(0);
+  for (var i = 0; i < 9; i++) {
+    for (var j = 0; j < 9; j++) {
+      if (board.getBoard()[3*Math.floor(i/3)+Math.floor(j/3)][j%3+3*(i%3)] != 0){
+        count[board.getBoard()[3*Math.floor(i/3)+Math.floor(j/3)][j%3+3*(i%3)]-1]++;
+      }
+    }
+
+    if (count.every(el => el <= 1)) {
+      count = Array(9).fill(0);
+    }else{
+      return false;
+    }
+
+  }
+
+  return true;
+}
+
+function thereAreNoHorizontalCollisionsWithChange() {
   let count = 0;
   for (var i = 0; i < 9; i++) {
     if (history[depth][0][Math.floor(location/9)][i] == newValue){
@@ -109,7 +213,7 @@ function thereAreNoHorizontalCollisions() {
   return (count == 1) ? true : false;
 }
 
-function thereAreNoVerticalCollisions() {
+function thereAreNoVerticalCollisionsWithChange() {
   let count = 0;
   for (var i = 0; i < 9; i++) {
     if (history[depth][0][i][location%9] == newValue){
@@ -119,7 +223,7 @@ function thereAreNoVerticalCollisions() {
   return (count == 1) ? true : false;
 }
 
-function thereAreNoInSqCollisions() {
+function thereAreNoInSqCollisionsWithChange() {
   let count = 0;
   for (var i = 0; i < 9; i++) {
     if (history[depth][0][Math.floor(location/9) - Math.floor(location/9)%3 + Math.floor(i/3)][location%9 - location%3 + i%3] == newValue){
