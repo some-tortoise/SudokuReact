@@ -29,6 +29,10 @@ table.no-spacing {
   border: none;
 }
 
+.baseValue{
+  font-weight: bold;
+}
+
 input{
   text-align: center;
 }
