@@ -31,7 +31,7 @@ class Square extends React.Component{
   render(){
     return(
       <>
-        <input maxLength = "1" className = {"square "+board.isBaseValue(this.props.value)} readOnly={board.isReadOnly(this.props.value)} pattern="[0-9]" value={board.getBoardValAtSq(this.props.value)}/>
+        <input maxLength = "1" className = {"input-sq-"+this.props.value+" square "+board.isBaseValue(this.props.value)} readOnly={board.isReadOnly(this.props.value)} pattern="[0-9]" value={board.getBoardValAtSq(this.props.value)}/>
       </>
     );
   }
@@ -84,7 +84,8 @@ class Board extends React.Component{
 
 class SolveButton extends React.Component{
   handleClick() {
-    //solver;
+    solver.solveStep();
+    //solver.printLastBoard()
   }
 
   render(){

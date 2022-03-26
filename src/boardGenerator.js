@@ -16,6 +16,10 @@ export function getBoard(){
   return boardArray;
 }
 
+export function setBoard(input){
+  boardArray = input;
+}
+
 export function getBoardValAtSq(i) {
   return boardArray[Math.floor(i/9)][i%9] != 0 ? boardArray[Math.floor(i/9)][i%9] : undefined;
 }
