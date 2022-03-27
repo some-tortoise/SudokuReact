@@ -1,19 +1,15 @@
 /*
-TO-DO:
-
-
-1. Update so that the moment a mistake is entered there will be highlighting on the squares
-2. Make prettier
 
 EXTRA:
 1. Grade sudoku's on difficulty
 2. Introduce notes
-3. Introduce player highlighting
-4. Introduce multiplayer?
-5. Give player hints to let them move on
-6. Create timer to measure time for player to complete
-7. Create an autochecker option
-8. Make a pop-up that explains hints when they are given
+3. Update so that the moment a mistake is entered there will be highlighting on the squares
+4. Introduce player highlighting
+5. Introduce multiplayer?
+6. Give player hints to let them move on
+7. Create timer to measure time for player to complete
+8. Create an autochecker option
+9. Make a pop-up that explains hints when they are given
 
 */
 
@@ -24,13 +20,11 @@ import "./styles.css";
 import * as board from "./boardGenerator.js";
 
 function Square(props){
-
   return(
     <>
       <input
       maxLength = "1"
       className = {"input-sq-"+props.value+" square"}
-      /*value={board.getBoardValAtSq(this.props.value)}*/
       />
     </>
   );
@@ -93,7 +87,7 @@ function SolveButton(){
 
 
     return(
-      <button onClick={() => handleClick()}> Solve</button>
+      <button className = "solve-button" onClick={() => handleClick()}> Solve</button>
     );
 
 }
@@ -105,7 +99,17 @@ function NewBoardButton() {
   }
 
   return(
-    <button onClick={() => handleClick()}> New Board</button>
+    <button className = "new-board-button" onClick={() => handleClick()}> New Board</button>
+  );
+}
+
+function HintButton() {
+  function handleClick(){
+    alert("This functionality is not available yet");
+  }
+
+  return(
+    <button className = "hint-button" onClick={() => handleClick()}> Hint</button>
   );
 }
 
@@ -115,9 +119,18 @@ class Game extends React.Component{
   render(){
     return(
       <>
-        <Board />
-        <SolveButton />
-        <NewBoardButton />
+        <header>Sudoku</header>
+        <div className = "game-container">
+          <div className = "board-container">
+            <Board />
+          </div>
+          <div className = "buttons-container">
+            <NewBoardButton />
+            <SolveButton />
+            <HintButton />
+          </div>
+        </div>
+        <footer>Made by Alejandro Breen</footer>
       </>
     );
   }
@@ -128,16 +141,26 @@ updateBoard();
 
 
 function updateBoard() {
+  $("td").removeClass("focused");
   for (var i = 0; i < 81; i++) {
     if (board.getBoardValAtSq(i) != 0) {
       $("input")[i].value = board.getBoardValAtSq(i);
       $("input")[i].disabled = true;
+      $("input")[i].className = $("input")[i].className + " baseValue";
+      $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("baseValParent");
     }else{
+      $("td")[i].classList.remove("baseValParent");
+      $("input")[i].classList.remove("baseValue");
       $("input")[i].value = null;
       $("input")[i].disabled = false;
     }
   }
 }
+
+$("input").on("focus", function (e) {
+  $("td").removeClass("focused");
+  $(this).parent().addClass("focused");
+});
 
 //LIMIT INPUT TO NUMBERS USING JQUERY EVENT LISTENERS AND UPDATE BOARD BASED ON INPUTS
 

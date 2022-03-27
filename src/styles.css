@@ -3,13 +3,106 @@ body{
   padding: 0px;
   border: 0px;
   display: inline;
+  font-family: sans-serif;
 }
 
+header{
+  background-color: #EEE;
+  padding: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 25px;
+  border-bottom: 5px solid #DDD;
+}
+
+.game-container{
+  text-align: center;
+  height: 300px;
+}
+
+.board-container{
+  float:left;
+  margin-left: 200px;
+}
+
+.game-container > *{
+  display: inline-block;
+}
+
+.buttons-container{
+  float: left;
+  margin-left: 100px;
+  width: 340px;
+  /*618px?*/
+  height: 230px;
+  border-radius: 10px;
+  background-color: #FFF;
+  font-size: 20px;
+}
+
+.new-board-button{
+  margin: 20px;
+  width: 280px;
+  height: 50px;
+  background-color: #1272e3;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.new-board-button:hover{
+  background-color: #1064c4;
+}
+
+.solve-button{
+  background-color: #CCC;
+  margin: 10px;
+  width: 120px;
+  height: 70px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.solve-button:hover{
+  background-color: #AAA;
+}
+
+.hint-button{
+  background-color: #CCC;
+  margin: 10px;
+  margin-left: 30px;
+  width: 120px;
+  height: 70px;
+  border: none;
+  border-radius: 10%;
+  font-size: 15px;
+}
+
+.hint-button:hover{
+  background-color: #AAA;
+}
+
+footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  color: black;
+  text-align: center;
+  margin: 30px;
+}
+
+
+
 table{
-  border: 1px solid black;
+  border: 2px solid black;
 }
 table td {
-  border: 0.5px solid black; /* Style just to show the table cell boundaries */
+  border: 0.5px solid #AAA; /* Style just to show the table cell boundaries */
 }
 
 
@@ -23,18 +116,34 @@ table.no-spacing {
   box-sizing: "border-box";
   margin: 0px;
   padding: 0px;
-  width: 20px;
-  height: 20px;
+  width: 65px;
+  height: 65px;
+  font-size: 35px;
   border-radius: 0px;
   border: none;
 }
 
 .baseValue{
-  font-weight: bold;
+  font-weight: bolder;
+  color: #000;
+
+}
+
+.baseValParent{
+  background-color: #F0F0F0;
 }
 
 input{
   text-align: center;
+  border: none;
+}
+
+.focused{
+  background-color: #bbdefb;
+}
+
+.focused > *{
+  background-color: #bbdefb;
 }
 
 input:focus{
@@ -42,9 +151,9 @@ input:focus{
 }
 
 .rightBorder{
-  border-right: 2px solid black;
+  border-right: 2px solid #888;
 }
 
 .bottomBorder{
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #888;
 }
