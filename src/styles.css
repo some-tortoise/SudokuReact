@@ -5,7 +5,18 @@ body{
   display: inline;
   font-family: sans-serif;
 }
+/*
+.settings-logo{
+  width: 60px;
+  background-color: transparent;
+}
 
+.settings-logo-container{
+  bottom: 0;
+  display: inline-block;
+  background-color: green;
+}
+*/
 header{
   background-color: #EEE;
   padding: 20px;
@@ -33,10 +44,37 @@ header{
   float: left;
   margin-left: 50px;
   width: 400px;
-  /*618px?*/
-  height: 200px;
+  height: 270px;
   background-color: #F2F2F2;
   font-size: 20px;
+}
+
+.auto-checker-container{
+  display: inline-block;
+}
+
+.auto-checker-container > * {
+  display: inline-block;
+}
+
+.auto-checker-container > div{
+  margin-right: 20px;
+  margin-left: 10px;
+}
+
+.settings-and-autocheck-container{
+  display: inline-block;
+  background-color: red;
+}
+
+.auto-checker-container > input[type=checkbox]{
+  background-color: #CCC;
+  width: 20px;
+  height: 60px;
+  border: none;
+  border-radius: 10%;
+  font-size: 15px;
+  vertical-align:middle;
 }
 
 .new-board-button{
@@ -145,7 +183,7 @@ table.no-spacing {
   background-color: #F0F0F0;
 }
 
-input{
+input[type=text]{
   text-align: center;
   border: none;
 }
@@ -182,7 +220,7 @@ input{
   background-color: #faaaaa;
 }
 
-input:focus{
+input[type=text]:focus{
   outline: none;
 }
 

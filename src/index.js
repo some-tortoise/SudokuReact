@@ -18,11 +18,15 @@ import ReactDOM from "react-dom";
 
 import "./styles.css";
 import * as board from "./boardGenerator.js";
+import logo from "../settingsLogo.png";
+
+let autocheck = false;
 
 function Square(props){
   return(
     <>
       <input
+      type = "text"
       maxLength = "1"
       className = {"input-sq-"+props.value+" square"}
       />
@@ -78,6 +82,8 @@ class Board extends React.Component{
 function SolveButton(){
   function handleClick() {
     console.log("solvin'...");
+    $("td").removeClass("wrong");
+    $(".square").removeClass("wrong");
     if (board.isSolvableFromPosition()) {
       board.solveBoard();
       updateBoard();
@@ -135,20 +141,24 @@ function HintButton() {
   );
 }
 
+function checkBoard() {
+  for (var i = 0; i < 81; i++) {
+    if (board.getBoardValAtSq(i) != 0) {
+      if($("input")[i].value != board.getSolvedBoardValAtSq(i)){
+        $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("wrong");
+      }else{
+        $("input")[i].disabled = true;
+        $("input")[i].className = $("input")[i].className + " baseValue";
+        $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("baseValParent");
+      }
+    }
+  }
+}
+
 function CheckButton() {
   function handleClick(){
     console.log("checkin'...");
-    for (var i = 0; i < 81; i++) {
-      if (board.getBoardValAtSq(i) != 0) {
-        if($("input")[i].value != board.getSolvedBoardValAtSq(i)){
-          $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("wrong");
-        }else{
-          $("input")[i].disabled = true;
-          $("input")[i].className = $("input")[i].className + " baseValue";
-          $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("baseValParent");
-        }
-      }
-    }
+    checkBoard();
   }
 
   return(
@@ -156,7 +166,37 @@ function CheckButton() {
   );
 }
 
+function AutoCheckButton() {
+  function handleClick(){
+    autocheck = !autocheck;
+    checkBoard();
+    if (autocheck) {
+      $(".auto-checker-text").text("Turn off auto-check");
+    }else{
+      $(".auto-checker-text").text("Turn on auto-check");
+    }
 
+  }
+
+  return(
+    <label className = "auto-checker-container">
+      <input type = "checkbox" className = "auto-check-button" onClick={() => handleClick()} />
+      <div className = "auto-checker-text">Turn on auto-check</div>
+    </label>
+  );
+}
+/*
+function SettingsButton(){
+  function handleClick(){
+
+  }
+
+  return(
+    <div className="settings-logo-container"><img className="settings-logo" src={logo} alt="Settings" /></div>
+  );
+}
+
+*/
 
 class Game extends React.Component{
   render(){
@@ -172,6 +212,7 @@ class Game extends React.Component{
             <SolveButton />
             <HintButton />
             <CheckButton />
+            <AutoCheckButton />
           </div>
         </div>
         <footer>Made by Alejandro Breen</footer>
@@ -202,7 +243,7 @@ function updateBoard() {
   }
 }
 
-$("input").on("focus", function (e) {
+$(".square").on("focus", function (e) {
   $("td").removeClass("focused");
   $("td").removeClass("justHinted");
   $(this).parent().addClass("focused");
@@ -210,7 +251,7 @@ $("input").on("focus", function (e) {
 
 //LIMIT INPUT TO NUMBERS USING JQUERY EVENT LISTENERS AND UPDATE BOARD BASED ON INPUTS
 
-$("input").on("keydown", function (e) {
+$(".square").on("keydown", function (e) {
   if (!(1 <= event.key && event.key <= 9) && event.keyCode != 8) {
     $(this).prop("readOnly",true);
   } else if(event.key >= 1 && event.key <= 9){
@@ -218,6 +259,9 @@ $("input").on("keydown", function (e) {
     if(board.getInitialBoardValAtSq(inputSq) == undefined){
       $(this)[0].value = event.key;
       board.setBoardValAtSq(inputSq, parseInt(event.key));
+    }
+    if(autocheck){
+      checkBoard();
     }
     if(board.returnTrueIfSolved()){
       alert("Nice, you solved the Sudoku!");
@@ -227,11 +271,14 @@ $("input").on("keydown", function (e) {
     if (board.getInitialBoardValAtSq(inputSq) == undefined) {
       board.setBoardValAtSq(inputSq, 0);
     }
+    if (autocheck) {
+      checkBoard();
+    }
     $("td")[inputSq].classList.remove("wrong");
     $("input")[inputSq].classList.remove("wrong");
   }
 });
 
-$("input").on("keyup", function (e) {
+$(".square").on("keyup", function (e) {
   $(this).prop("readOnly",false);
 });
