@@ -1,12 +1,12 @@
 /*
 TO-DO:
 
-1. create a solver that simply uses brute force to solve a given Sudoku
-2. use said solver to generate sudoku puzzles based on solved boards. Details provided: https://stackoverflow.com/questions/6924216/how-to-generate-sudoku-boards-with-unique-solutions
-3. create a button titled "New Board" and build a new board with the algorithm everytime the button is pressed
-4. Fix "Solve" button to tell user the puzzle is broken if they messed up
-5. Update so that the moment a mistake is entered there will be highlighting on the squares
-6. Make prettier
+
+1. use solver to generate sudoku puzzles based on solved boards. Details provided: https://stackoverflow.com/questions/6924216/how-to-generate-sudoku-boards-with-unique-solutions
+2. create a button titled "New Board" and build a new board with the algorithm everytime the button is pressed
+3. Fix "Solve" button to tell user the puzzle is broken if they messed up
+4. Update so that the moment a mistake is entered there will be highlighting on the squares
+5. Make prettier
 
 EXTRA:
 1. Grade sudoku's on difficulty
@@ -34,7 +34,7 @@ class Square extends React.Component{
         <input
         maxLength = "1"
         className = {"input-sq-"+this.props.value+" square "+board.isBaseValue(this.props.value)}
-        readOnly={board.isReadOnly(this.props.value)}
+        disabled={board.isDisabled(this.props.value)}
         pattern="[0-9]"
         value={board.getBoardValAtSq(this.props.value)}
         />
@@ -59,7 +59,7 @@ class Board extends React.Component{
   }
 
   renderSquare(i) {
-    return <td className={"sq"+i+" "+this.renderBoxBorders(i)} key={i}><Square value={i}/></td>;
+    return <td className={"sq-"+i+" "+this.renderBoxBorders(i)} key={"sq-"+i}><Square value={i}/></td>;
   }
 
   renderRow(rowSize,i) {
@@ -67,7 +67,7 @@ class Board extends React.Component{
     for (var j = 0; j < rowSize; j++) {
       returnStatement.push( this.renderSquare(i*rowSize+j) );
     }
-    return <tr key={i} className={"row"+i}>{returnStatement}</tr>;
+    return <tr key={"row-"+i} className={"row-"+i}>{returnStatement}</tr>;
   }
 
   renderBoard(boardWidth) {
@@ -90,10 +90,12 @@ class Board extends React.Component{
 
 class SolveButton extends React.Component{
   handleClick() {
-    solver.solve();
-    solver.setBoardToSolvedBoard();
-    updateBoard();
-    console.log("updatin'...");
+    console.log("solvin'...");
+    if (board.isSolvableFromPosition()) {
+      updateBoard();
+    }else{
+      alert("Board is not solvable from that position");
+    }
   }
 
   render(){
@@ -117,8 +119,10 @@ class Game extends React.Component{
 ReactDOM.render(<Game />, document.getElementById("root"));
 
 function updateBoard() {
-  for (var i = 0; i < $("input").length; i++) {
-    $("input")[i].value = board.getBoardValAtSq(i) != undefined ? board.getBoardValAtSq(i) : null;
+
+  for (var i = 0; i < 81; i++) {
+
+    $("input")[i].value = board.getBoardValAtSq(i);
   }
 }
 
@@ -128,12 +132,16 @@ $("input").on("keydown", function (e) {
   if (!(1 <= event.key && event.key <= 9) && event.keyCode != 8) {
     $(this).prop("readOnly",true);
   } else if(event.key >= 1 && event.key <= 9){
-    $(this)[0].value = event.key;
-    let inputNum = parseInt($(this)[0].className.match(/\d/g).join(""));
-    board.getBoard()[Math.floor(inputNum/9)][inputNum%9] = parseInt(event.key);
+    let inputSq = parseInt($(this)[0].className.match(/\d/g).join(""));
+    if(board.getInitialBoardValAtSq(inputSq) == undefined){
+      $(this)[0].value = event.key;
+      board.setBoardValAtSq(inputSq, parseInt(event.key));
+    }
   } else if (event.keyCode == 8){
-    let inputNum = parseInt($(this)[0].className.match(/\d/g).join(""));
-    board.getBoard()[Math.floor(inputNum/9)][inputNum%9] = 0;
+    let inputSq = parseInt($(this)[0].className.match(/\d/g).join(""));
+    if (board.getInitialBoardValAtSq(inputSq) == undefined) {
+      board.setBoardValAtSq(inputSq, 0);
+    }
   }
 });
 
