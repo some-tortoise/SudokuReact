@@ -1,38 +1,4 @@
-let initialBoard=[
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0]
-];
-
-let currentBoard=[
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0]
-];
-
-let solvedBoard=[
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0]
-];
+let initialBoard, currentBoard, solvedBoard;
 
 export function getInitialBoardValAtSq(i){
   return initialBoard[Math.floor(i/9)][i%9] != 0 ? initialBoard[Math.floor(i/9)][i%9] : undefined;
@@ -47,20 +13,11 @@ export function setBoard(input){
 }
 
 export function getBoardValAtSq(i) {
-  return currentBoard[Math.floor(i/9)][i%9] != 0 ? currentBoard[Math.floor(i/9)][i%9] : undefined;
+  return currentBoard[Math.floor(i/9)][i%9];
 }
 
 export function setBoardValAtSq(i,val){
-  console.log(currentBoard);
   currentBoard[Math.floor(i/9)][i%9] = val;
-}
-
-export function isBaseValue(i) {
-  return initialBoard[Math.floor(i/9)][i%9] != 0 ? "baseValue" : "";
-}
-
-export function isDisabled(i) {
-  return initialBoard[Math.floor(i/9)][i%9] != 0 ? true : false;
 }
 
 export function isSolvableFromPosition(){
@@ -82,10 +39,27 @@ export function isSolvableFromPosition(){
 
 let counter = 1;
 let numList = [1,2,3,4,5,6,7,8,9];
-createSolvedBoard(solvedBoard);
-initialBoard = extractArray(solvedBoard);
-createBoardFromSolvedBoard(initialBoard);
-currentBoard = extractArray(initialBoard);
+
+generateBoard();
+
+export function generateBoard(){
+  console.log("generatin'...");
+  solvedBoard = [
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0]
+  ];
+  createSolvedBoard(solvedBoard);
+  initialBoard = extractArray(solvedBoard);
+  createBoardFromSolvedBoard(initialBoard);
+  currentBoard = extractArray(initialBoard);
+}
 
 export function createSolvedBoard(grid){
   let row, col, val;

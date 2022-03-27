@@ -2,11 +2,8 @@
 TO-DO:
 
 
-1. use solver to generate sudoku puzzles based on solved boards. Details provided: https://stackoverflow.com/questions/6924216/how-to-generate-sudoku-boards-with-unique-solutions
-2. create a button titled "New Board" and build a new board with the algorithm everytime the button is pressed
-3. Fix "Solve" button to tell user the puzzle is broken if they messed up
-4. Update so that the moment a mistake is entered there will be highlighting on the squares
-5. Make prettier
+1. Update so that the moment a mistake is entered there will be highlighting on the squares
+2. Make prettier
 
 EXTRA:
 1. Grade sudoku's on difficulty
@@ -25,22 +22,18 @@ import ReactDOM from "react-dom";
 
 import "./styles.css";
 import * as board from "./boardGenerator.js";
-import * as solver from "./solver.js";
 
-class Square extends React.Component{
-  render(){
-    return(
-      <>
-        <input
-        maxLength = "1"
-        className = {"input-sq-"+this.props.value+" square "+board.isBaseValue(this.props.value)}
-        disabled={board.isDisabled(this.props.value)}
-        pattern="[0-9]"
-        value={board.getBoardValAtSq(this.props.value)}
-        />
-      </>
-    );
-  }
+function Square(props){
+
+  return(
+    <>
+      <input
+      maxLength = "1"
+      className = {"input-sq-"+props.value+" square"}
+      /*value={board.getBoardValAtSq(this.props.value)}*/
+      />
+    </>
+  );
 }
 
 class Board extends React.Component{
@@ -88,8 +81,8 @@ class Board extends React.Component{
   }
 }
 
-class SolveButton extends React.Component{
-  handleClick() {
+function SolveButton(){
+  function handleClick() {
     console.log("solvin'...");
     if (board.isSolvableFromPosition()) {
       updateBoard();
@@ -98,12 +91,25 @@ class SolveButton extends React.Component{
     }
   }
 
-  render(){
+
     return(
-      <button onClick={() => this.handleClick()}> Solve</button>
+      <button onClick={() => handleClick()}> Solve</button>
     );
-  }
+
 }
+
+function NewBoardButton() {
+  function handleClick(){
+    board.generateBoard();
+    updateBoard();
+  }
+
+  return(
+    <button onClick={() => handleClick()}> New Board</button>
+  );
+}
+
+
 
 class Game extends React.Component{
   render(){
@@ -111,22 +117,29 @@ class Game extends React.Component{
       <>
         <Board />
         <SolveButton />
+        <NewBoardButton />
       </>
     );
   }
 }
 
 ReactDOM.render(<Game />, document.getElementById("root"));
+updateBoard();
+
 
 function updateBoard() {
-
   for (var i = 0; i < 81; i++) {
-
-    $("input")[i].value = board.getBoardValAtSq(i);
+    if (board.getBoardValAtSq(i) != 0) {
+      $("input")[i].value = board.getBoardValAtSq(i);
+      $("input")[i].disabled = true;
+    }else{
+      $("input")[i].value = null;
+      $("input")[i].disabled = false;
+    }
   }
 }
 
-//LIMIT INPUT TO NUMBERS USING JQUERY EVENT LISTENERS
+//LIMIT INPUT TO NUMBERS USING JQUERY EVENT LISTENERS AND UPDATE BOARD BASED ON INPUTS
 
 $("input").on("keydown", function (e) {
   if (!(1 <= event.key && event.key <= 9) && event.keyCode != 8) {
