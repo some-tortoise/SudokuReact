@@ -20,6 +20,14 @@ export function setBoardValAtSq(i,val){
   currentBoard[Math.floor(i/9)][i%9] = val;
 }
 
+export function getSolvedBoardValAtSq(i) {
+  return solvedBoard[Math.floor(i/9)][i%9];
+}
+
+export function solveBoard(){
+  currentBoard = extractArray(solvedBoard);
+}
+
 export function isSolvableFromPosition(){
   let copyGrid = extractArray(currentBoard);
   counter=0;
@@ -27,9 +35,19 @@ export function isSolvableFromPosition(){
   if(counter != 1){
     return false;
   }else{
-    currentBoard = extractArray(solvedBoard);
     return true;
   }
+}
+
+export function returnTrueIfSolved(){
+  for (var i = 0; i < currentBoard.length; i++) {
+    for (var j = 0; j < currentBoard[i].length; j++) {
+      if(currentBoard[i][j] != solvedBoard[i][j]){
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 /************************************************************************/
@@ -156,6 +174,19 @@ export function createBoardFromSolvedBoard(grid){
       attempts -= 1;
     }
   }
+}
+
+export function findRandomZero() {
+  let zeroesPos = [];
+  let row,col;
+  for (var i = 0; i < 81; i++) {
+    row = floor(i/9);
+    col = i%9;
+    if(currentBoard[row][col] == 0){
+      zeroesPos.push(i);
+    }
+  }
+  return zeroesPos[floor(Math.random()*zeroesPos.length)];
 }
 
 function floor(x){

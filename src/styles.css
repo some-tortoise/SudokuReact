@@ -31,19 +31,18 @@ header{
 
 .buttons-container{
   float: left;
-  margin-left: 100px;
-  width: 340px;
+  margin-left: 50px;
+  width: 400px;
   /*618px?*/
-  height: 230px;
-  border-radius: 10px;
-  background-color: #FFF;
+  height: 200px;
+  background-color: #F2F2F2;
   font-size: 20px;
 }
 
 .new-board-button{
   margin: 20px;
-  width: 280px;
-  height: 50px;
+  width: 320px;
+  height: 60px;
   background-color: #1272e3;
   border: none;
   border-radius: 10px;
@@ -59,8 +58,8 @@ header{
 .solve-button{
   background-color: #CCC;
   margin: 10px;
-  width: 120px;
-  height: 70px;
+  width: 90px;
+  height: 60px;
   border: none;
   border-radius: 10px;
   font-size: 15px;
@@ -73,15 +72,28 @@ header{
 .hint-button{
   background-color: #CCC;
   margin: 10px;
-  margin-left: 30px;
-  width: 120px;
-  height: 70px;
+  width: 90px;
+  height: 60px;
   border: none;
   border-radius: 10%;
   font-size: 15px;
 }
 
 .hint-button:hover{
+  background-color: #AAA;
+}
+
+.check-button{
+  background-color: #CCC;
+  margin: 10px;
+  width: 90px;
+  height: 60px;
+  border: none;
+  border-radius: 10%;
+  font-size: 15px;
+}
+
+.check-button:hover{
   background-color: #AAA;
 }
 
@@ -144,6 +156,30 @@ input{
 
 .focused > *{
   background-color: #bbdefb;
+}
+
+.wrong{
+  background-color: #faaaaa;
+}
+
+.wrong.focused{
+  background-color: #fa8787;
+}
+
+.justHinted {
+  background-color: #CCC;
+}
+
+.justHinted > * {
+  background-color: #CCC;
+}
+
+.wrong.focused > * {
+  background-color: #fa8787;
+}
+
+.wrong > *{
+  background-color: #faaaaa;
 }
 
 input:focus{

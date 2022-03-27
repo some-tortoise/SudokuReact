@@ -79,8 +79,9 @@ function SolveButton(){
   function handleClick() {
     console.log("solvin'...");
     if (board.isSolvableFromPosition()) {
+      board.solveBoard();
       updateBoard();
-    }else{
+    }else if(!board.returnTrueIfSolved()){
       alert("Board is not solvable from that position");
     }
   }
@@ -105,11 +106,53 @@ function NewBoardButton() {
 
 function HintButton() {
   function handleClick(){
-    alert("This functionality is not available yet");
+    console.log("hintin'...");
+    let hintGiven = false;
+    $("td").removeClass("focused");
+    for (var i = 0; i < 81; i++) {
+      if (board.getBoardValAtSq(i) != 0) {
+        if($("input")[i].value != board.getSolvedBoardValAtSq(i)){
+          $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("wrong");
+          hintGiven = true;
+          break;
+        }
+      }
+    }
+    if(!hintGiven){
+      let pos = board.findRandomZero();
+      $("input")[pos].value = board.getSolvedBoardValAtSq(pos);
+      board.setBoardValAtSq(pos, board.getSolvedBoardValAtSq(pos));
+      $("input")[pos].disabled = true;
+      $("input")[pos].className = $("input")[pos].className + " baseValue";
+      $("td").has("."+$("input")[pos].className.split(" ")[0]).addClass("baseValParent");
+      $("td").has("."+$("input")[pos].className.split(" ")[0]).addClass("justHinted");
+      hintGiven = true;
+    }
   }
 
   return(
     <button className = "hint-button" onClick={() => handleClick()}> Hint</button>
+  );
+}
+
+function CheckButton() {
+  function handleClick(){
+    console.log("checkin'...");
+    for (var i = 0; i < 81; i++) {
+      if (board.getBoardValAtSq(i) != 0) {
+        if($("input")[i].value != board.getSolvedBoardValAtSq(i)){
+          $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("wrong");
+        }else{
+          $("input")[i].disabled = true;
+          $("input")[i].className = $("input")[i].className + " baseValue";
+          $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("baseValParent");
+        }
+      }
+    }
+  }
+
+  return(
+    <button className = "check-button" onClick={() => handleClick()}> Check</button>
   );
 }
 
@@ -128,6 +171,7 @@ class Game extends React.Component{
             <NewBoardButton />
             <SolveButton />
             <HintButton />
+            <CheckButton />
           </div>
         </div>
         <footer>Made by Alejandro Breen</footer>
@@ -149,6 +193,7 @@ function updateBoard() {
       $("input")[i].className = $("input")[i].className + " baseValue";
       $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("baseValParent");
     }else{
+      $("td")[i].classList.remove("justHinted");
       $("td")[i].classList.remove("baseValParent");
       $("input")[i].classList.remove("baseValue");
       $("input")[i].value = null;
@@ -159,6 +204,7 @@ function updateBoard() {
 
 $("input").on("focus", function (e) {
   $("td").removeClass("focused");
+  $("td").removeClass("justHinted");
   $(this).parent().addClass("focused");
 });
 
@@ -173,11 +219,16 @@ $("input").on("keydown", function (e) {
       $(this)[0].value = event.key;
       board.setBoardValAtSq(inputSq, parseInt(event.key));
     }
+    if(board.returnTrueIfSolved()){
+      alert("Nice, you solved the Sudoku!");
+    }
   } else if (event.keyCode == 8){
     let inputSq = parseInt($(this)[0].className.match(/\d/g).join(""));
     if (board.getInitialBoardValAtSq(inputSq) == undefined) {
       board.setBoardValAtSq(inputSq, 0);
     }
+    $("td")[inputSq].classList.remove("wrong");
+    $("input")[inputSq].classList.remove("wrong");
   }
 });
 
