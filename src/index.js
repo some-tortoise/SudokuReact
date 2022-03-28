@@ -184,7 +184,19 @@ function SettingsButton(){
 
 function NumberButton(props) {
   function handleClick(){
-    alert("That functionality is not avaiable yet");
+    if(!$(".focused").hasClass("baseValParent")){
+      $(".focused").children()[0].value = props.value;
+      let inputSq = parseInt($(".focused").children()[0].className.match(/\d/g).join(""));
+      board.setBoardValAtSq(inputSq, parseInt(event.key));
+      $("td")[inputSq].classList.remove("wrong");
+      $("input")[inputSq].classList.remove("wrong");
+      if(autocheck){
+        checkBoard();
+      }
+      if(board.returnTrueIfSolved()){
+        alert("Nice, you solved the Sudoku!");
+      }
+    }
   }
 
   return(
@@ -220,7 +232,6 @@ class NumberGrid extends React.Component{
     );
   }
 }
-
 
 
 
@@ -303,6 +314,8 @@ $(".square").on("keydown", function (e) {
   } else if(event.key >= 1 && event.key <= 9){
     let inputSq = parseInt($(this)[0].className.match(/\d/g).join(""));
     if(board.getInitialBoardValAtSq(inputSq) == undefined){
+      $("td")[inputSq].classList.remove("wrong");
+      $("input")[inputSq].classList.remove("wrong");
       $(this)[0].value = event.key;
       board.setBoardValAtSq(inputSq, parseInt(event.key));
     }
@@ -315,6 +328,7 @@ $(".square").on("keydown", function (e) {
   } else if (event.keyCode == 8){
     let inputSq = parseInt($(this)[0].className.match(/\d/g).join(""));
     if (board.getInitialBoardValAtSq(inputSq) == undefined) {
+      $(this)[0].value = null;
       board.setBoardValAtSq(inputSq, 0);
     }
     if (autocheck) {

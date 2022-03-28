@@ -14,6 +14,7 @@ body{
 .settings-logo-container{
   float: right;
   display: inline-block;
+  cursor: pointer;
 }
 
 header{
@@ -67,6 +68,7 @@ header{
   color: #111;
   border: none;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .num-button > *:hover{
@@ -83,6 +85,7 @@ header{
 
 .auto-checker-container{
   display: inline-block;
+  cursor: pointer;
 }
 
 .auto-checker-container > * {
@@ -119,6 +122,7 @@ header{
   color: white;
   font-weight: bold;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .new-board-button:hover{
@@ -133,6 +137,7 @@ header{
   border: none;
   border-radius: 10px;
   font-size: 15px;
+  cursor: pointer;
 }
 
 .solve-button:hover{
@@ -147,6 +152,7 @@ header{
   border: none;
   border-radius: 10%;
   font-size: 15px;
+  cursor: pointer;
 }
 
 .hint-button:hover{
@@ -161,6 +167,7 @@ header{
   border: none;
   border-radius: 10%;
   font-size: 15px;
+  cursor: pointer;
 }
 
 .check-button:hover{
@@ -198,8 +205,8 @@ table.sudoku-grid.no-spacing {
   box-sizing: "border-box";
   margin: 0px;
   padding: 0px;
-  width: 67.2px;
-  height: 67.2px;
+  width: 67.3px;
+  height: 67.3px;
   font-size: 35px;
   border-radius: 0px;
   border: none;
@@ -254,6 +261,8 @@ input[type=text]{
 
 input[type=text]:focus{
   outline: none;
+  border: none;
+  caret-color: transparent;
 }
 
 .sudoku-grid.rightBorder{
