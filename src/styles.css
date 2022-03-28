@@ -6,6 +6,69 @@ body{
   font-family: sans-serif;
 }
 
+.choose-difficulty-panel{
+  position: absolute;
+  left: 680px;
+  top: 100px;
+  background-color: #FFFFFF;
+  width: 200px;
+  height: 170px;
+  display: block;
+  border-radius: 5px;
+  box-shadow: 10px 10px 30px grey;
+}
+
+.arrow-right {
+  width: 0;
+  height: 0;
+  position: relative;
+  left: 200px;
+  top: -135px;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 15px solid #FFFFFF;
+  filter: drop-shadow(10px 10px 30px grey);
+}
+
+.hidden{
+  display: none;
+}
+
+.shown{
+  display: block;
+}
+
+.choose-difficulty-header{
+
+  padding-bottom: 10px;
+  margin: 20px;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  font-weight: bold;
+  font-size: 18px;
+  border-bottom: 1px solid black;
+}
+
+.difficulty-level-button{
+  background-color: #FFFFFF00;
+  border: none;
+  display: block;
+  float: top;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 10px;
+  margin-left: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.difficulty-level-button:hover{
+  box-shadow: 2px 2px 50px white;
+  background-color: #EEE;
+}
+
 .settings-logo{
   width: 30px;
   background-color: transparent;

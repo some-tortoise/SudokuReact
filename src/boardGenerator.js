@@ -58,9 +58,9 @@ export function returnTrueIfSolved(){
 let counter = 1;
 let numList = [1,2,3,4,5,6,7,8,9];
 
-generateBoard();
+generateBoard(5);
 
-export function generateBoard(){
+export function generateBoard(attempts){
   console.log("generatin'...");
   solvedBoard = [
     [0,0,0,0,0,0,0,0,0],
@@ -75,7 +75,7 @@ export function generateBoard(){
   ];
   createSolvedBoard(solvedBoard);
   initialBoard = extractArray(solvedBoard);
-  createBoardFromSolvedBoard(initialBoard);
+  createBoardFromSolvedBoard(initialBoard, attempts);
   currentBoard = extractArray(initialBoard);
 }
 
@@ -150,8 +150,7 @@ export function solveGrid(grid){
   return false;
 }
 
-export function createBoardFromSolvedBoard(grid){
-  let attempts = 5;
+export function createBoardFromSolvedBoard(grid, attempts){
   let copyGrid;
   let row, col;
   while (attempts > 0){

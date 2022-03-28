@@ -99,19 +99,18 @@ function SolveButton(){
 
 }
 
-function NewBoardButton() {
-  function handleClick(){
-    board.generateBoard();
-    updateBoard();
-  }
-
+function NewBoardButton(props) {
   return(
-    <button className = "new-board-button" onClick={() => handleClick()}> New Board</button>
+    <button className = "new-board-button" onClick = {() => props.onClick()}> New Board</button>
   );
 }
 
 function HintButton() {
   function handleClick(){
+
+    if(board.returnTrueIfSolved()){
+      return;
+    }
     console.log("hintin'...");
     let hintGiven = false;
     $("td").removeClass("focused");
@@ -233,21 +232,97 @@ class NumberGrid extends React.Component{
   }
 }
 
+function DifficultyLevelButton(props){
+  return(
+    <button onClick = {() => props.onClick(props.value)} className = {"difficulty-level-button difficulty-button-"+props.value}>{props.value}</button>
+  );
+}
+
+class ChooseDifficultyPanel extends React.Component {
+  renderDifficulty(diff){
+    return < DifficultyLevelButton key = {diff} value = {diff} onClick = {(attempts) => this.props.handleDifficultyClick(attempts)}/>;
+  }
+  renderPanel(){
+    let panel = [];
+    panel.push(this.renderDifficulty("Easy"));
+    panel.push(this.renderDifficulty("Medium"));
+    panel.push(this.renderDifficulty("Hard"));
+    return panel;
+  }
 
 
-
-class Game extends React.Component{
   render(){
     return(
+      <div className = {"choose-difficulty-panel "+ (this.props.showVal ? "shown" : "hidden")}>
+        <div className= "choose-difficulty-header">
+          Choose Difficulty
+        </div>
+
+        {this.renderPanel()}
+        <div className = "arrow-right">
+        </div>
+      </div>
+    );
+  }
+}
+
+class Game extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      showDifficultyPanel: false,
+    };
+
+  }
+
+  newBoardClick(){
+    this.setState({
+      showDifficultyPanel: !this.state.showDifficultyPanel,
+    });
+  }
+
+  handleClick(){
+    if(this.state.showDifficultyPanel){
+      this.setState({
+        showDifficultyPanel: !this.state.showDifficultyPanel,
+      });
+    }
+  }
+
+  handleDifficultyClick(difficulty){
+    console.log(difficulty);
+    if(difficulty == "Easy"){
+      board.generateBoard(1);
+    }else if(difficulty == "Medium"){
+      board.generateBoard(5);
+    }else if(difficulty == "Hard"){
+      board.generateBoard(14);
+    }else{
+      alert("Error Occurred");
+    }
+
+    updateBoard();
+    this.setState({
+      showDifficultyPanel: !this.state.showDifficultyPanel,
+    });
+  }
+
+
+  render(){
+    const presentDifficultyPanel = this.state.showDifficultyPanel;
+    return(
       <>
+      <ChooseDifficultyPanel showVal = {presentDifficultyPanel} handleDifficultyClick = {(attempts) => this.handleDifficultyClick(attempts)}/>
+      <div onClick={() => this.handleClick()}>
         <header>Sudoku<SettingsButton /></header>
         <div className = "game-container">
           <div className = "board-container">
             <Board />
+
           </div>
           <div className = "all-buttons-container">
             <div className = "top-buttons-container">
-              <NewBoardButton />
+              <NewBoardButton onClick={() => this.newBoardClick()}/>
               <SolveButton />
               <HintButton />
               <CheckButton />
@@ -259,6 +334,7 @@ class Game extends React.Component{
           </div>
         </div>
         <footer>Made by Alejandro Breen</footer>
+      </div>
       </>
     );
   }
@@ -305,6 +381,7 @@ $(".square").on("focus", function (e) {
   $("td").removeClass("justHinted");
   $(this).parent().addClass("focused");
 });
+
 
 //LIMIT INPUT TO NUMBERS USING JQUERY EVENT LISTENERS AND UPDATE BOARD BASED ON INPUTS
 
