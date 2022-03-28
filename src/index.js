@@ -1,15 +1,12 @@
 /*
 
 EXTRA:
-1. Grade sudoku's on difficulty
-2. Introduce notes
-3. Update so that the moment a mistake is entered there will be highlighting on the squares
-4. Introduce player highlighting
-5. Introduce multiplayer?
-6. Give player hints to let them move on
-7. Create timer to measure time for player to complete
-8. Create an autochecker option
-9. Make a pop-up that explains hints when they are given
+1. Introduce notes
+2. Update so that the moment a mistake is entered there will be highlighting on the squares
+3. Introduce player highlighting
+4. Give smart hints
+5. Create Timer
+6. Add dark mode
 
 */
 
@@ -171,13 +168,9 @@ function AutoCheckButton() {
   );
 }
 
-function SettingsButton(){
-  function handleClick(){
-    alert("That functionality is not avaiable yet");
-  }
-
+function SettingsButton(props){
   return(
-    <div className="settings-logo-container" onClick={() => handleClick()}><img className="settings-logo" src={logo} alt="Settings" /></div>
+    <div className="settings-logo-container" onClick={() => props.onClick()}><img className="settings-logo" src={logo} alt="Settings" /></div>
   );
 }
 
@@ -266,11 +259,49 @@ class ChooseDifficultyPanel extends React.Component {
   }
 }
 
+function SettingsPanel(props) {
+  return (
+
+    <div className = {"settings-panel-super-container " + (props.showVal ? "shown" : "hidden")}>
+      <div className = "settings-panel-container">
+        <div className = "settings-panel-header">
+        Settings
+        </div>
+
+        <div className = "settings-panel-close-button-container" onClick = {() => props.onClose()}>
+          <div>
+            x
+          </div>
+        </div>
+
+        <div className = "settings-panel-theme-container">
+          <div className = "settings-panel-theme-header">
+          Theme
+          </div>
+
+          <input type="radio" id="light-radio" className="settings-panel-theme-radio" name="themes" value="light" defaultChecked/><label htmlFor="light-radio" className="settings-panel-theme-label">Light Theme</label><br />
+          <input type="radio" id="dark-radio" className="settings-panel-theme-radio" name="themes"  value="dark"/><label htmlFor="dark-radio" className="settings-panel-theme-label">Dark Theme</label>
+        </div>
+
+        <div className="settings-panel-get-board-string-container">
+          <div className="settings-panel-get-board-string-header">
+          Export
+          </div>
+          <button className = "settings-panel-get-board-string-button">Get String</button>
+          <input type="text" className = "settings-panel-get-board-string-input"/>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
 class Game extends React.Component{
   constructor(props){
     super(props);
     this.state = {
       showDifficultyPanel: false,
+      showSettingsPanel: false,
     };
 
   }
@@ -292,11 +323,11 @@ class Game extends React.Component{
   handleDifficultyClick(difficulty){
     console.log(difficulty);
     if(difficulty == "Easy"){
-      board.generateBoard(1);
-    }else if(difficulty == "Medium"){
       board.generateBoard(5);
+    }else if(difficulty == "Medium"){
+      board.generateBoard(10);
     }else if(difficulty == "Hard"){
-      board.generateBoard(14);
+      board.generateBoard(20);
     }else{
       alert("Error Occurred");
     }
@@ -307,14 +338,29 @@ class Game extends React.Component{
     });
   }
 
+  handleOpenSettingsClick(){
+    this.setState({
+      showSettingsPanel: true,
+    });
+    board.exportSudoku();
+  }
+
+  handleCloseSettingsClick(){
+    this.setState({
+      showSettingsPanel: false,
+    });
+  }
+
 
   render(){
     const presentDifficultyPanel = this.state.showDifficultyPanel;
+    const presentSettingsPanel = this.state.showSettingsPanel;
     return(
       <>
+      <SettingsPanel showVal = {presentSettingsPanel} onClose = {() => this.handleCloseSettingsClick()}/>
       <ChooseDifficultyPanel showVal = {presentDifficultyPanel} handleDifficultyClick = {(attempts) => this.handleDifficultyClick(attempts)}/>
       <div onClick={() => this.handleClick()}>
-        <header>Sudoku<SettingsButton /></header>
+        <header>Sudoku<SettingsButton onClick = {() =>this.handleOpenSettingsClick()}/></header>
         <div className = "game-container">
           <div className = "board-container">
             <Board />
@@ -348,16 +394,16 @@ function updateBoard() {
   $("td").removeClass("focused");
   for (var i = 0; i < 81; i++) {
     if (board.getBoardValAtSq(i) != 0) {
-      $("input")[i].value = board.getBoardValAtSq(i);
-      $("input")[i].disabled = true;
-      $("input")[i].className = $("input")[i].className + " baseValue";
+      $(".square")[i].value = board.getBoardValAtSq(i);
+      $(".square")[i].disabled = true;
+      $(".square")[i].className = $("input")[i].className + " baseValue";
       $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("baseValParent");
     }else{
       $("td")[i].classList.remove("justHinted");
       $("td")[i].classList.remove("baseValParent");
-      $("input")[i].classList.remove("baseValue");
-      $("input")[i].value = null;
-      $("input")[i].disabled = false;
+      $(".square")[i].classList.remove("baseValue");
+      $(".square")[i].value = null;
+      $(".square")[i].disabled = false;
     }
   }
 }

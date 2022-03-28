@@ -150,6 +150,17 @@ export function solveGrid(grid){
   return false;
 }
 
+export function exportSudoku(){
+  let printString = "";
+  for (var i = 0; i < currentBoard.length; i++) {
+    for (var j = 0; j < currentBoard[i].length; j++) {
+      printString+=currentBoard[i][j];
+    }
+  }
+  console.log(printString);
+  return printString;
+}
+
 export function createBoardFromSolvedBoard(grid, attempts){
   let copyGrid;
   let row, col;
