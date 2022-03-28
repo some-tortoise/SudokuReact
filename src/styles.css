@@ -5,18 +5,17 @@ body{
   display: inline;
   font-family: sans-serif;
 }
-/*
+
 .settings-logo{
-  width: 60px;
+  width: 30px;
   background-color: transparent;
 }
 
 .settings-logo-container{
-  bottom: 0;
+  float: right;
   display: inline-block;
-  background-color: green;
 }
-*/
+
 header{
   background-color: #EEE;
   padding: 20px;
@@ -40,11 +39,44 @@ header{
   display: inline-block;
 }
 
-.buttons-container{
+.all-buttons-container{
+  margin: 0px;
+  display: grid;
   float: left;
   margin-left: 50px;
-  width: 400px;
-  height: 270px;
+}
+
+.number-grid-container{
+  margin: 0 auto;
+}
+
+.num-button{
+
+  width: 115px;
+  height: 115px;
+}
+
+.num-button > *{
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  width: 115px;
+  height: 115px;
+  font-size: 40px;
+  background-color: #EEE;
+  color: #111;
+  border: none;
+  font-weight: bold;
+}
+
+.num-button > *:hover{
+  background-color: #CCC;
+}
+
+.top-buttons-container{
+  width: 370px;
+  height: 250px;
+  margin-bottom: 20px;
   background-color: #F2F2F2;
   font-size: 20px;
 }
@@ -148,15 +180,15 @@ footer{
 
 
 
-table{
+table.sudoku-grid{
   border: 2px solid black;
 }
-table td {
+td.sudoku-grid {
   border: 0.5px solid #AAA; /* Style just to show the table cell boundaries */
 }
 
 
-table.no-spacing {
+table.sudoku-grid.no-spacing {
   border-spacing:0; /* Removes the cell spacing via CSS */
   border-collapse: collapse;  /* Optional - if you don't want to have double border where cells touch */
 }
@@ -166,8 +198,8 @@ table.no-spacing {
   box-sizing: "border-box";
   margin: 0px;
   padding: 0px;
-  width: 65px;
-  height: 65px;
+  width: 67.2px;
+  height: 67.2px;
   font-size: 35px;
   border-radius: 0px;
   border: none;
@@ -224,10 +256,10 @@ input[type=text]:focus{
   outline: none;
 }
 
-.rightBorder{
+.sudoku-grid.rightBorder{
   border-right: 2px solid #888;
 }
 
-.bottomBorder{
+.sudoku-grid.bottomBorder{
   border-bottom: 2px solid #888;
 }

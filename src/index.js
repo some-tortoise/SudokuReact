@@ -50,7 +50,7 @@ class Board extends React.Component{
   }
 
   renderSquare(i) {
-    return <td className={"sq-"+i+" "+this.renderBoxBorders(i)} key={"sq-"+i}><Square value={i}/></td>;
+    return <td className={"sudoku-grid sq-"+i+" "+this.renderBoxBorders(i)} key={"sq-"+i}><Square value={i}/></td>;
   }
 
   renderRow(rowSize,i) {
@@ -58,7 +58,7 @@ class Board extends React.Component{
     for (var j = 0; j < rowSize; j++) {
       returnStatement.push( this.renderSquare(i*rowSize+j) );
     }
-    return <tr key={"row-"+i} className={"row-"+i}>{returnStatement}</tr>;
+    return <tr key={"row-"+i} className={"sudoku-grid row-"+i}>{returnStatement}</tr>;
   }
 
   renderBoard(boardWidth) {
@@ -66,13 +66,13 @@ class Board extends React.Component{
     for (var i = 0; i < boardWidth; i++) {
       board.push( this.renderRow(boardWidth,i) );
     }
-    return <tbody>{board}</tbody>;
+    return <tbody className="sudoku-grid">{board}</tbody>;
   }
 
 
   render() {
     return(
-      <table cellSpacing="0">{this.renderBoard(9)}</table>
+      <table className="sudoku-grid" cellSpacing="0">{this.renderBoard(9)}</table>
     );
 
 
@@ -141,20 +141,6 @@ function HintButton() {
   );
 }
 
-function checkBoard() {
-  for (var i = 0; i < 81; i++) {
-    if (board.getBoardValAtSq(i) != 0) {
-      if($("input")[i].value != board.getSolvedBoardValAtSq(i)){
-        $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("wrong");
-      }else{
-        $("input")[i].disabled = true;
-        $("input")[i].className = $("input")[i].className + " baseValue";
-        $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("baseValParent");
-      }
-    }
-  }
-}
-
 function CheckButton() {
   function handleClick(){
     console.log("checkin'...");
@@ -185,34 +171,80 @@ function AutoCheckButton() {
     </label>
   );
 }
-/*
+
 function SettingsButton(){
   function handleClick(){
-
+    alert("That functionality is not avaiable yet");
   }
 
   return(
-    <div className="settings-logo-container"><img className="settings-logo" src={logo} alt="Settings" /></div>
+    <div className="settings-logo-container" onClick={() => handleClick()}><img className="settings-logo" src={logo} alt="Settings" /></div>
   );
 }
 
-*/
+function NumberButton(props) {
+  function handleClick(){
+    alert("That functionality is not avaiable yet");
+  }
+
+  return(
+    <button className = "number-button" onClick={() => handleClick()}>{props.value}</button>
+  );
+}
+
+class NumberGrid extends React.Component{
+
+  renderSquare(i) {
+    return <td className={"num-button num-button-"+i+1} key={"num-button-"+i+1}><NumberButton value={i+1}/></td>;
+  }
+
+  renderRow(rowSize,i) {
+    let returnStatement = [];
+    for (var j = 0; j < rowSize; j++) {
+      returnStatement.push( this.renderSquare(i*rowSize+j) );
+    }
+    return <tr key={"num-row-"+i} className={"num-row-"+i}>{returnStatement}</tr>;
+  }
+
+  renderBoard(){
+    let board = [];
+    for (var i = 0; i < 3; i++) {
+      board.push( this.renderRow(3,i) );
+    }
+    return <tbody>{board}</tbody>;
+  }
+
+  render(){
+    return(
+      <table cellSpacing="0">{this.renderBoard()}</table>
+    );
+  }
+}
+
+
+
+
 
 class Game extends React.Component{
   render(){
     return(
       <>
-        <header>Sudoku</header>
+        <header>Sudoku<SettingsButton /></header>
         <div className = "game-container">
           <div className = "board-container">
             <Board />
           </div>
-          <div className = "buttons-container">
-            <NewBoardButton />
-            <SolveButton />
-            <HintButton />
-            <CheckButton />
-            <AutoCheckButton />
+          <div className = "all-buttons-container">
+            <div className = "top-buttons-container">
+              <NewBoardButton />
+              <SolveButton />
+              <HintButton />
+              <CheckButton />
+              <AutoCheckButton />
+            </div>
+            <div className = "number-grid-container">
+              <NumberGrid />
+            </div>
           </div>
         </div>
         <footer>Made by Alejandro Breen</footer>
@@ -239,6 +271,20 @@ function updateBoard() {
       $("input")[i].classList.remove("baseValue");
       $("input")[i].value = null;
       $("input")[i].disabled = false;
+    }
+  }
+}
+
+function checkBoard() {
+  for (var i = 0; i < 81; i++) {
+    if (board.getBoardValAtSq(i) != 0) {
+      if($("input")[i].value != board.getSolvedBoardValAtSq(i)){
+        $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("wrong");
+      }else{
+        $("input")[i].disabled = true;
+        $("input")[i].className = $("input")[i].className + " baseValue";
+        $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("baseValParent");
+      }
     }
   }
 }
