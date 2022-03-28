@@ -47,7 +47,7 @@ class Board extends React.Component{
   }
 
   renderSquare(i) {
-    return <td className={"sudoku-grid sq-"+i+" "+this.renderBoxBorders(i)} key={"sq-"+i}><Square value={i}/></td>;
+    return <td className={"sudoku-grid sudoku-grid-td sq-"+i+" "+this.renderBoxBorders(i)} key={"sq-"+i}><Square value={i}/></td>;
   }
 
   renderRow(rowSize,i) {
@@ -79,7 +79,7 @@ class Board extends React.Component{
 function SolveButton(){
   function handleClick() {
     console.log("solvin'...");
-    $("td").removeClass("wrong");
+    $(".sudoku-grid-td").removeClass("wrong");
     $(".square").removeClass("wrong");
     if (board.isSolvableFromPosition()) {
       board.solveBoard();
@@ -110,11 +110,11 @@ function HintButton() {
     }
     console.log("hintin'...");
     let hintGiven = false;
-    $("td").removeClass("focused");
+    $(".sudoku-grid-td").removeClass("focused");
     for (var i = 0; i < 81; i++) {
       if (board.getBoardValAtSq(i) != 0) {
-        if($("input")[i].value != board.getSolvedBoardValAtSq(i)){
-          $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("wrong");
+        if($(".square")[i].value != board.getSolvedBoardValAtSq(i)){
+          $(".sudoku-grid-td").has("."+$(".square")[i].className.split(" ")[0]).addClass("wrong");
           hintGiven = true;
           break;
         }
@@ -180,8 +180,8 @@ function NumberButton(props) {
       $(".focused").children()[0].value = props.value;
       let inputSq = parseInt($(".focused").children()[0].className.match(/\d/g).join(""));
       board.setBoardValAtSq(inputSq, parseInt(event.key));
-      $("td")[inputSq].classList.remove("wrong");
-      $("input")[inputSq].classList.remove("wrong");
+      $(".sudoku-grid-td")[inputSq].classList.remove("wrong");
+      $(".square")[inputSq].classList.remove("wrong");
       if(autocheck){
         checkBoard();
       }
@@ -357,7 +357,6 @@ class Game extends React.Component{
     const presentSettingsPanel = this.state.showSettingsPanel;
     return(
       <>
-      <SettingsPanel showVal = {presentSettingsPanel} onClose = {() => this.handleCloseSettingsClick()}/>
       <ChooseDifficultyPanel showVal = {presentDifficultyPanel} handleDifficultyClick = {(attempts) => this.handleDifficultyClick(attempts)}/>
       <div onClick={() => this.handleClick()}>
         <header>Sudoku<SettingsButton onClick = {() =>this.handleOpenSettingsClick()}/></header>
@@ -381,6 +380,7 @@ class Game extends React.Component{
         </div>
         <footer>Made by Alejandro Breen</footer>
       </div>
+      <SettingsPanel showVal = {presentSettingsPanel} onClose = {() => this.handleCloseSettingsClick()}/>
       </>
     );
   }
@@ -391,16 +391,16 @@ updateBoard();
 
 
 function updateBoard() {
-  $("td").removeClass("focused");
+  $(".sudoku-grid-td").removeClass("focused");
   for (var i = 0; i < 81; i++) {
     if (board.getBoardValAtSq(i) != 0) {
       $(".square")[i].value = board.getBoardValAtSq(i);
       $(".square")[i].disabled = true;
       $(".square")[i].className = $("input")[i].className + " baseValue";
-      $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("baseValParent");
+      $(".sudoku-grid-td").has("."+$("input")[i].className.split(" ")[0]).addClass("baseValParent");
     }else{
-      $("td")[i].classList.remove("justHinted");
-      $("td")[i].classList.remove("baseValParent");
+      $(".sudoku-grid-td")[i].classList.remove("justHinted");
+      $(".sudoku-grid-td")[i].classList.remove("baseValParent");
       $(".square")[i].classList.remove("baseValue");
       $(".square")[i].value = null;
       $(".square")[i].disabled = false;
@@ -411,20 +411,20 @@ function updateBoard() {
 function checkBoard() {
   for (var i = 0; i < 81; i++) {
     if (board.getBoardValAtSq(i) != 0) {
-      if($("input")[i].value != board.getSolvedBoardValAtSq(i)){
-        $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("wrong");
+      if($(".square")[i].value != board.getSolvedBoardValAtSq(i)){
+        $(".sudoku-grid-td").has("."+$(".square")[i].className.split(" ")[0]).addClass("wrong");
       }else{
-        $("input")[i].disabled = true;
-        $("input")[i].className = $("input")[i].className + " baseValue";
-        $("td").has("."+$("input")[i].className.split(" ")[0]).addClass("baseValParent");
+        $(".square")[i].disabled = true;
+        $(".square")[i].className = $(".square")[i].className + " baseValue";
+        $(".sudoku-grid-td").has("."+$(".square")[i].className.split(" ")[0]).addClass("baseValParent");
       }
     }
   }
 }
 
 $(".square").on("focus", function (e) {
-  $("td").removeClass("focused");
-  $("td").removeClass("justHinted");
+  $(".sudoku-grid-td").removeClass("focused");
+  $(".sudoku-grid-td").removeClass("justHinted");
   $(this).parent().addClass("focused");
 });
 
@@ -437,8 +437,8 @@ $(".square").on("keydown", function (e) {
   } else if(event.key >= 1 && event.key <= 9){
     let inputSq = parseInt($(this)[0].className.match(/\d/g).join(""));
     if(board.getInitialBoardValAtSq(inputSq) == undefined){
-      $("td")[inputSq].classList.remove("wrong");
-      $("input")[inputSq].classList.remove("wrong");
+      $(".sudoku-grid-td")[inputSq].classList.remove("wrong");
+      $(".square")[inputSq].classList.remove("wrong");
       $(this)[0].value = event.key;
       board.setBoardValAtSq(inputSq, parseInt(event.key));
     }
@@ -457,8 +457,8 @@ $(".square").on("keydown", function (e) {
     if (autocheck) {
       checkBoard();
     }
-    $("td")[inputSq].classList.remove("wrong");
-    $("input")[inputSq].classList.remove("wrong");
+    $(".sudoku-grid-td")[inputSq].classList.remove("wrong");
+    $(".square")[inputSq].classList.remove("wrong");
   }
 });
 
