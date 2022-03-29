@@ -326,7 +326,7 @@ class Game extends React.Component{
     }else if(difficulty == "Medium"){
       board.generateBoard(10);
     }else if(difficulty == "Hard"){
-      board.generateBoard(20);
+      board.generateBoard(18);
     }else{
       alert("Error Occurred");
     }
