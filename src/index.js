@@ -1,12 +1,9 @@
 /*
 
-EXTRA:
-1. Introduce notes
-2. Update so that the moment a mistake is entered there will be highlighting on the squares
-3. Introduce player highlighting
-4. Give smart hints
-5. Create Timer
-6. Add dark mode
+TO-DO:
+1. Make solve screen nicer
+2. Create timer and add option for timer in settings
+3. Add dark mode
 
 */
 
@@ -260,6 +257,7 @@ class ChooseDifficultyPanel extends React.Component {
 }
 
 function SettingsPanel(props) {
+
   return (
 
     <div className = {"settings-panel-super-container " + (props.showVal ? "shown" : "hidden")}>
@@ -287,8 +285,8 @@ function SettingsPanel(props) {
           <div className="settings-panel-get-board-string-header">
           Export
           </div>
-          <button className = "settings-panel-get-board-string-button">Get String</button>
-          <input type="text" className = "settings-panel-get-board-string-input"/>
+          <button className = "settings-panel-get-board-string-button" onClick = {() => props.handleExportClicks()} >Get String</button>
+          <input type="text" className = "settings-panel-get-board-string-input" defaultValue={props.sudokuStringCode == "" ? "" : "String: "+props.sudokuStringCode}/>
 
         </div>
       </div>
@@ -302,6 +300,7 @@ class Game extends React.Component{
     this.state = {
       showDifficultyPanel: false,
       showSettingsPanel: false,
+      sudokuStringCode: "",
     };
 
   }
@@ -341,13 +340,20 @@ class Game extends React.Component{
   handleOpenSettingsClick(){
     this.setState({
       showSettingsPanel: true,
+      sudokuStringCode: "",
     });
-    board.exportSudoku();
   }
 
   handleCloseSettingsClick(){
     this.setState({
       showSettingsPanel: false,
+      sudokuStringCode: "",
+    });
+  }
+
+  handleExportClick() {
+    this.setState({
+      sudokuStringCode: board.exportSudoku(),
     });
   }
 
@@ -380,7 +386,7 @@ class Game extends React.Component{
         </div>
         <footer>Made by Alejandro Breen</footer>
       </div>
-      <SettingsPanel showVal = {presentSettingsPanel} onClose = {() => this.handleCloseSettingsClick()}/>
+      <SettingsPanel handleExportClicks = {() => this.handleExportClick()} sudokuStringCode = {this.state.sudokuStringCode} showVal = {presentSettingsPanel} onClose = {() => this.handleCloseSettingsClick()}/>
       </>
     );
   }

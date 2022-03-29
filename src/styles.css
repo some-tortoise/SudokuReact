@@ -433,6 +433,10 @@ input[type=text]:focus{
 .settings-panel-get-board-string-input{
   margin: 10px;
   margin-left: 20px;
+  width: 800px;
+  font-size: 15px;
+  text-align: left;
+  font-weight: bold;
 }
 
 .settings-panel-get-board-string-button{

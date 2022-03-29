@@ -157,7 +157,6 @@ export function exportSudoku(){
       printString+=currentBoard[i][j];
     }
   }
-  console.log(printString);
   return printString;
 }
 
