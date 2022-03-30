@@ -12,28 +12,23 @@ body{
   font-family: sans-serif;
 }
 
+body.light{
+  background-color: white;
+}
+
+body.dark{
+  background-color: #111;
+}
+
 .choose-difficulty-panel{
   position: absolute;
   left: 680px;
   top: 100px;
-  background-color: #FFFFFF;
   width: 200px;
   height: 170px;
   display: block;
   border-radius: 5px;
   box-shadow: 10px 10px 30px grey;
-}
-
-.arrow-right {
-  width: 0;
-  height: 0;
-  position: relative;
-  left: 200px;
-  top: -135px;
-  border-top: 15px solid transparent;
-  border-bottom: 15px solid transparent;
-  border-left: 15px solid #FFFFFF;
-  filter: drop-shadow(10px 10px 30px grey);
 }
 
 .hidden{
@@ -44,19 +39,54 @@ body{
   display: block;
 }
 
-.choose-difficulty-header{
+.choose-difficulty-panel.light{
+  background-color: #FFF;
+}
 
+.choose-difficulty-panel.dark{
+  background-color: #000;
+}
+
+.arrow-right {
+  width: 0;
+  height: 0;
+  position: relative;
+  left: 200px;
+  top: -135px;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+}
+
+.arrow-right.light{
+  border-left: 15px solid #FFFFFF;
+  filter: drop-shadow(10px 10px 30px grey);
+}
+
+.arrow-right.dark{
+  border-left: 15px solid #000;
+  filter: drop-shadow(10px 10px 30px grey);
+}
+
+.choose-difficulty-header{
   padding-bottom: 10px;
   margin: 20px;
   margin-top: 10px;
   margin-bottom: 0px;
   font-weight: bold;
   font-size: 18px;
+}
+
+.choose-difficulty-header.light{
+  color: #000;
   border-bottom: 1px solid black;
 }
 
+.choose-difficulty-header.dark{
+  color: #999;
+  border-bottom: 1px solid #EEE;
+}
+
 .difficulty-level-button{
-  background-color: #FFFFFF00;
   border: none;
   display: block;
   float: top;
@@ -70,8 +100,25 @@ body{
   width: 100%;
 }
 
-.difficulty-level-button:hover{
+.difficulty-level-button.light{
+  background-color: #FFFFFF00;
+  color: black;
+}
+
+.difficulty-level-button.dark{
+  background-color: #00000000;
+  color: white;
+}
+
+.difficulty-level-button.light:hover{
   box-shadow: 2px 2px 50px white;
+  color: black;
+  background-color: #EEE;
+}
+
+.difficulty-level-button.dark:hover{
+  box-shadow: 2px 2px 50px white;
+  color:black;
   background-color: #EEE;
 }
 
@@ -87,12 +134,23 @@ body{
 }
 
 header{
-  background-color: #EEE;
   padding: 20px;
   margin-bottom: 20px;
   font-weight: bold;
   font-size: 25px;
+
+}
+
+header.light{
+  background-color: #EEE;
+  color: black;
   border-bottom: 5px solid #DDD;
+}
+
+header.dark{
+  background-color: #333;
+  color: white;
+  border-bottom: 5px solid #222;
 }
 
 .game-container{
@@ -121,7 +179,6 @@ header{
 }
 
 .num-button{
-
   width: 115px;
   height: 115px;
 }
@@ -133,23 +190,45 @@ header{
   width: 115px;
   height: 115px;
   font-size: 40px;
-  background-color: #EEE;
-  color: #111;
   border: none;
   font-weight: bold;
   cursor: pointer;
 }
 
-.num-button > *:hover{
+.num-button.light > *{
+  background-color: #EEE;
+  color: #111;
+}
+
+.num-button.dark > *{
+  background-color: #222;
+  color: #CCC;
+  box-shadow: 0px 0px 10px #000;
+}
+
+
+.num-button.light > *:hover{
   background-color: #CCC;
+}
+
+.num-button.dark > *:hover{
+  background-color: #555;
 }
 
 .top-buttons-container{
   width: 370px;
   height: 250px;
   margin-bottom: 20px;
-  background-color: #F2F2F2;
   font-size: 20px;
+}
+
+.top-buttons-container.light{
+  background-color: #F2F2F2;
+}
+
+.top-buttons-container.dark{
+  background-color: #222;
+  box-shadow: 0px 0px 10px #000;
 }
 
 .auto-checker-container{
@@ -168,11 +247,9 @@ header{
 
 .settings-and-autocheck-container{
   display: inline-block;
-  background-color: red;
 }
 
 .auto-checker-container > input[type=checkbox]{
-  background-color: #CCC;
   width: 20px;
   height: 60px;
   border: none;
@@ -181,25 +258,44 @@ header{
   vertical-align:middle;
 }
 
+.auto-checker-text.light{
+  color: black;
+}
+
+.auto-checker-text.dark{
+  color: #DDD;
+}
+
 .new-board-button{
   margin: 20px;
   width: 320px;
   height: 60px;
-  background-color: #1272e3;
   border: none;
   border-radius: 10px;
-  color: white;
   font-weight: bold;
   font-size: 20px;
   cursor: pointer;
 }
 
-.new-board-button:hover{
+.new-board-button.light{
+  background-color: #1272e3;
+  color: white;
+}
+
+.new-board-button.dark{
+  background-color: #49ba5a;
+  color: black;
+}
+
+.new-board-button.light:hover{
   background-color: #1064c4;
 }
 
+.new-board-button.dark:hover{
+  background-color: #368f44;
+}
+
 .solve-button{
-  background-color: #CCC;
   margin: 10px;
   width: 90px;
   height: 60px;
@@ -209,12 +305,26 @@ header{
   cursor: pointer;
 }
 
-.solve-button:hover{
+.solve-button.light{
+  background-color: #CCC;
+  color: black;
+}
+
+.solve-button.dark{
+  background-color: #999;
+  color: black;
+}
+
+.solve-button.light:hover{
   background-color: #AAA;
+}
+
+.solve-button.dark:hover{
+  background-color: #BBB;
 }
 
 .hint-button{
-  background-color: #CCC;
+
   margin: 10px;
   width: 90px;
   height: 60px;
@@ -224,12 +334,24 @@ header{
   cursor: pointer;
 }
 
-.hint-button:hover{
+.hint-button.light{
+  background-color: #CCC;
+  color: #000;
+}
+
+.hint-button.dark{
+  background-color: #999
+}
+
+.hint-button.light:hover{
   background-color: #AAA;
+}
+
+.hint-button.dark:hover{
+  background-color: #BBB;
 }
 
 .check-button{
-  background-color: #CCC;
   margin: 10px;
   width: 90px;
   height: 60px;
@@ -239,8 +361,20 @@ header{
   cursor: pointer;
 }
 
-.check-button:hover{
+.check-button.light{
+  background-color: #CCC;
+}
+
+.check-button.dark{
+  background-color: #999;
+}
+
+.check-button.light:hover{
   background-color: #AAA;
+}
+
+.check-button.dark:hover{
+  background-color: #BBB;
 }
 
 footer{
@@ -248,19 +382,34 @@ footer{
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #fff;
-  color: black;
   text-align: center;
   margin: 30px;
 }
 
+footer.light{
+  background-color: #fff;
+  color: black;
+}
 
+footer.dark{
+  border-color: #111;
+  color: #CCC;
+}
 
-table.sudoku-grid{
+table.sudoku-grid.light{
   border: 2px solid black;
 }
-td.sudoku-grid {
+
+table.sudoku-grid.dark{
+  border: 2px solid white;
+}
+
+td.sudoku-grid.light{
   border: 0.5px solid #AAA; /* Style just to show the table cell boundaries */
+}
+
+td.sudoku-grid.dark{
+  border: 0.5px solid #CCC;
 }
 
 
@@ -281,14 +430,34 @@ table.sudoku-grid.no-spacing {
   border: none;
 }
 
-.baseValue{
-  font-weight: bolder;
-  color: #000;
-
+.square.light{
+  color: black;
+  background-color: white;
 }
 
-.baseValParent{
+.square.dark{
+  color: #b3d0ff;
+  background-color: #050505;
+}
+
+.baseValue{
+  font-weight: bold;
+}
+
+.baseValue.light{
+  color: #000;
+}
+
+.baseValue.dark{
+  color: #EEE;
+}
+
+.baseValParent.light{
   background-color: #F0F0F0;
+}
+
+.baseValParent.dark{
+  background-color: #121212;
 }
 
 input[type=text]{
@@ -296,36 +465,68 @@ input[type=text]{
   border: none;
 }
 
-.focused{
+.focused.light{
   background-color: #bbdefb;
 }
 
-.focused > *{
+.focused.dark{
+  background-color: #516e9c;
+}
+
+.focused.light > *{
   background-color: #bbdefb;
 }
 
-.wrong{
+.focused.dark > *{
+  background-color: #516e9c;
+}
+
+.wrong.light{
   background-color: #faaaaa;
 }
 
-.wrong.focused{
+.wrong.dark{
+  background-color: #420500;
+}
+
+.wrong.focused.light{
   background-color: #fa8787;
 }
 
-.justHinted {
+.wrong.focused.dark{
+  background-color: #820900;
+}
+
+.justHinted.light {
   background-color: #CCC;
 }
 
-.justHinted > * {
+.justHinted.dark {
+  background-color: #444;
+}
+
+.justHinted.light > * {
   background-color: #CCC;
 }
 
-.wrong.focused > * {
+.justHinted.dark > * {
+  background-color: #444;
+}
+
+.wrong.focused.light > * {
   background-color: #fa8787;
 }
 
-.wrong > *{
+.wrong.focused.dark > * {
+  background-color: #820900;
+}
+
+.wrong.light > *{
   background-color: #faaaaa;
+}
+
+.wrong.dark > *{
+  background-color: #420500;
 }
 
 input[type=text]:focus{
@@ -334,12 +535,20 @@ input[type=text]:focus{
   caret-color: transparent;
 }
 
-.sudoku-grid.rightBorder{
+.sudoku-grid.rightBorder.light{
   border-right: 2px solid #888;
 }
 
-.sudoku-grid.bottomBorder{
+.sudoku-grid.rightBorder.dark{
+  border-right: 2px solid #BBB;
+}
+
+.sudoku-grid.bottomBorder.light{
   border-bottom: 2px solid #888;
+}
+
+.sudoku-grid.bottomBorder.dark{
+  border-bottom: 2px solid #BBB;
 }
 
 /*SETTINGS PANEL*/

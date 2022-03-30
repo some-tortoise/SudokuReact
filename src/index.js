@@ -22,7 +22,7 @@ function Square(props){
       <input
       type = "text"
       maxLength = "1"
-      className = {"input-sq-"+props.value+" square"}
+      className = {"input-sq-"+props.value+" square light"}
       />
     </>
   );
@@ -44,7 +44,7 @@ class Board extends React.Component{
   }
 
   renderSquare(i) {
-    return <td className={"sudoku-grid sudoku-grid-td sq-"+i+" "+this.renderBoxBorders(i)} key={"sq-"+i}><Square value={i}/></td>;
+    return <td className={"light sudoku-grid sudoku-grid-td sq-"+i+" "+this.renderBoxBorders(i)} key={"sq-"+i}><Square value={i}/></td>;
   }
 
   renderRow(rowSize,i) {
@@ -52,7 +52,7 @@ class Board extends React.Component{
     for (var j = 0; j < rowSize; j++) {
       returnStatement.push( this.renderSquare(i*rowSize+j) );
     }
-    return <tr key={"row-"+i} className={"sudoku-grid row-"+i}>{returnStatement}</tr>;
+    return <tr key={"row-"+i} className={"sudoku-grid light row-"+i}>{returnStatement}</tr>;
   }
 
   renderBoard(boardWidth) {
@@ -60,13 +60,13 @@ class Board extends React.Component{
     for (var i = 0; i < boardWidth; i++) {
       board.push( this.renderRow(boardWidth,i) );
     }
-    return <tbody className="sudoku-grid">{board}</tbody>;
+    return <tbody className="sudoku-grid light">{board}</tbody>;
   }
 
 
   render() {
     return(
-      <table className="sudoku-grid" cellSpacing="0">{this.renderBoard(9)}</table>
+      <table className="sudoku-grid light" cellSpacing="0">{this.renderBoard(9)}</table>
     );
 
 
@@ -88,14 +88,14 @@ function SolveButton(){
 
 
     return(
-      <button className = "solve-button" onClick={() => handleClick()}> Solve</button>
+      <button className = "solve-button light" onClick={() => handleClick()}> Solve</button>
     );
 
 }
 
 function NewBoardButton(props) {
   return(
-    <button className = "new-board-button" onClick = {() => props.onClick()}> New Board</button>
+    <button className = "new-board-button light" onClick = {() => props.onClick()}> New Board</button>
   );
 }
 
@@ -130,7 +130,7 @@ function HintButton() {
   }
 
   return(
-    <button className = "hint-button" onClick={() => handleClick()}> Hint</button>
+    <button className = "hint-button light" onClick={() => handleClick()}> Hint</button>
   );
 }
 
@@ -141,7 +141,7 @@ function CheckButton() {
   }
 
   return(
-    <button className = "check-button" onClick={() => handleClick()}> Check</button>
+    <button className = "check-button light" onClick={() => handleClick()}> Check</button>
   );
 }
 
@@ -158,16 +158,16 @@ function AutoCheckButton() {
   }
 
   return(
-    <label className = "auto-checker-container">
-      <input type = "checkbox" className = "auto-check-button" onClick={() => handleClick()} />
-      <div className = "auto-checker-text">Turn on auto-check</div>
+    <label className = "auto-checker-container light">
+      <input type = "checkbox" className = "auto-check-button light" onClick={() => handleClick()} />
+      <div className = "auto-checker-text light">Turn on auto-check</div>
     </label>
   );
 }
 
 function SettingsButton(props){
   return(
-    <div className="settings-logo-container" onClick={() => props.onClick()}><img className="settings-logo" src={logo} alt="Settings" /></div>
+    <div className="settings-logo-container light" onClick={() => props.onClick()}><img className="settings-logo" src={logo} alt="Settings" /></div>
   );
 }
 
@@ -189,14 +189,14 @@ function NumberButton(props) {
   }
 
   return(
-    <button className = "number-button" onClick={() => handleClick()}>{props.value}</button>
+    <button className = "number-button light" onClick={() => handleClick()}>{props.value}</button>
   );
 }
 
 class NumberGrid extends React.Component{
 
   renderSquare(i) {
-    return <td className={"num-button num-button-"+i+1} key={"num-button-"+i+1}><NumberButton value={i+1}/></td>;
+    return <td className={"num-button light num-button-"+i+1} key={"num-button-"+i+1}><NumberButton value={i+1}/></td>;
   }
 
   renderRow(rowSize,i) {
@@ -204,7 +204,7 @@ class NumberGrid extends React.Component{
     for (var j = 0; j < rowSize; j++) {
       returnStatement.push( this.renderSquare(i*rowSize+j) );
     }
-    return <tr key={"num-row-"+i} className={"num-row-"+i}>{returnStatement}</tr>;
+    return <tr key={"num-row-"+i} className={"light num-row-"+i}>{returnStatement}</tr>;
   }
 
   renderBoard(){
@@ -224,7 +224,7 @@ class NumberGrid extends React.Component{
 
 function DifficultyLevelButton(props){
   return(
-    <button onClick = {() => props.onClick(props.value)} className = {"difficulty-level-button difficulty-button-"+props.value}>{props.value}</button>
+    <button onClick = {() => props.onClick(props.value)} className = {"difficulty-level-button light difficulty-button-"+props.value}>{props.value}</button>
   );
 }
 
@@ -243,13 +243,13 @@ class ChooseDifficultyPanel extends React.Component {
 
   render(){
     return(
-      <div className = {"choose-difficulty-panel "+ (this.props.showVal ? "shown" : "hidden")}>
-        <div className= "choose-difficulty-header">
+      <div className = {"choose-difficulty-panel "+ (this.props.showVal ? "shown" : "hidden")+" "+this.props.theme}>
+        <div className= "choose-difficulty-header light">
           Choose Difficulty
         </div>
 
         {this.renderPanel()}
-        <div className = "arrow-right">
+        <div className = "arrow-right light">
         </div>
       </div>
     );
@@ -260,33 +260,33 @@ function SettingsPanel(props) {
 
   return (
 
-    <div className = {"settings-panel-super-container " + (props.showVal ? "shown" : "hidden")}>
-      <div className = "settings-panel-container">
-        <div className = "settings-panel-header">
+    <div className = {"settings-panel-super-container light " + (props.showVal ? "shown" : "hidden")}>
+      <div className = "settings-panel-container light">
+        <div className = "settings-panel-header light">
         Settings
         </div>
 
-        <div className = "settings-panel-close-button-container" onClick = {() => props.onClose()}>
+        <div className = "settings-panel-close-button-container light" onClick = {() => props.onClose()}>
           <div>
             x
           </div>
         </div>
 
-        <div className = "settings-panel-theme-container">
-          <div className = "settings-panel-theme-header">
+        <div className = "settings-panel-theme-container light">
+          <div className = "settings-panel-theme-header light">
           Theme
           </div>
 
-          <input type="radio" id="light-radio" className="settings-panel-theme-radio" name="themes" value="light" defaultChecked/><label htmlFor="light-radio" className="settings-panel-theme-label">Light Theme</label><br />
-          <input type="radio" id="dark-radio" className="settings-panel-theme-radio" name="themes"  value="dark"/><label htmlFor="dark-radio" className="settings-panel-theme-label">Dark Theme</label>
+          <input type="radio" id="light-radio" onClick = {() => props.handleThemeChangeHandler("light")} className="settings-panel-theme-radio light" name="themes" value="light" defaultChecked/><label htmlFor="light-radio" className="settings-panel-theme-label">Light Theme</label><br />
+          <input type="radio" id="dark-radio" onClick = {() => props.handleThemeChangeHandler("dark")} className="settings-panel-theme-radio light" name="themes"  value="dark"/><label htmlFor="dark-radio" className="settings-panel-theme-label">Dark Theme</label>
         </div>
 
-        <div className="settings-panel-get-board-string-container">
-          <div className="settings-panel-get-board-string-header">
+        <div className="settings-panel-get-board-string-container light">
+          <div className="settings-panel-get-board-string-header light">
           Export
           </div>
-          <button className = "settings-panel-get-board-string-button" onClick = {() => props.handleExportClicks()} >Get String</button>
-          <input type="text" className = "settings-panel-get-board-string-input" defaultValue={props.sudokuStringCode == "" ? "" : "String: "+props.sudokuStringCode}/>
+          <button className = "settings-panel-get-board-string-button light" onClick = {() => props.handleExportClicks()} >Get String</button>
+          <input type="text" className = "settings-panel-get-board-string-input light" defaultValue={props.sudokuStringCode == "" ? "" : "String: "+props.sudokuStringCode}/>
 
         </div>
       </div>
@@ -301,6 +301,7 @@ class Game extends React.Component{
       showDifficultyPanel: false,
       showSettingsPanel: false,
       sudokuStringCode: "",
+      colorTheme: "light",
     };
 
   }
@@ -332,9 +333,28 @@ class Game extends React.Component{
     }
 
     updateBoard();
+    $(".sudoku-grid-td").removeClass("justHinted");
     this.setState({
       showDifficultyPanel: !this.state.showDifficultyPanel,
     });
+  }
+
+  handleThemeChange(theme){
+    if(theme == "dark"){
+      this.setState({
+        colorTheme: "dark",
+      });
+      $(".light").addClass("dark");
+      $(".dark").removeClass("light");
+    }else{
+      this.setState({
+        colorTheme: "light",
+      });
+      $(".dark").addClass("light");
+      $(".light").removeClass("dark");
+    }
+
+
   }
 
   handleOpenSettingsClick(){
@@ -362,32 +382,32 @@ class Game extends React.Component{
     const presentDifficultyPanel = this.state.showDifficultyPanel;
     const presentSettingsPanel = this.state.showSettingsPanel;
     return(
-      <>
-      <ChooseDifficultyPanel showVal = {presentDifficultyPanel} handleDifficultyClick = {(attempts) => this.handleDifficultyClick(attempts)}/>
-      <div onClick={() => this.handleClick()}>
-        <header>Sudoku<SettingsButton onClick = {() =>this.handleOpenSettingsClick()}/></header>
-        <div className = "game-container">
-          <div className = "board-container">
-            <Board />
+      <div>
+        <ChooseDifficultyPanel className = "light" theme = {this.state.colorTheme} showVal = {presentDifficultyPanel} handleDifficultyClick = {(attempts) => this.handleDifficultyClick(attempts)}/>
+        <div className="super-container light" onClick={() => this.handleClick()}>
+          <header className = "light">Sudoku<SettingsButton onClick = {() =>this.handleOpenSettingsClick()}/></header>
+          <div className = "game-container light">
+            <div className = "board-container light">
+              <Board />
 
-          </div>
-          <div className = "all-buttons-container">
-            <div className = "top-buttons-container">
-              <NewBoardButton onClick={() => this.newBoardClick()}/>
-              <SolveButton />
-              <HintButton />
-              <CheckButton />
-              <AutoCheckButton />
             </div>
-            <div className = "number-grid-container">
-              <NumberGrid />
+            <div className = "all-buttons-container light">
+              <div className = "top-buttons-container light">
+                <NewBoardButton onClick={() => this.newBoardClick()}/>
+                <SolveButton />
+                <HintButton />
+                <CheckButton />
+                <AutoCheckButton />
+              </div>
+              <div className = "number-grid-container light">
+                <NumberGrid />
+              </div>
             </div>
           </div>
+          <footer className="light">Made by Alejandro Breen</footer>
         </div>
-        <footer>Made by Alejandro Breen</footer>
+        <SettingsPanel handleThemeChangeHandler = {(i) => this.handleThemeChange(i)} handleExportClicks = {() => this.handleExportClick()} sudokuStringCode = {this.state.sudokuStringCode} showVal = {presentSettingsPanel} onClose = {() => this.handleCloseSettingsClick()}/>
       </div>
-      <SettingsPanel handleExportClicks = {() => this.handleExportClick()} sudokuStringCode = {this.state.sudokuStringCode} showVal = {presentSettingsPanel} onClose = {() => this.handleCloseSettingsClick()}/>
-      </>
     );
   }
 }
