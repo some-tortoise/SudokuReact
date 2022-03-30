@@ -260,33 +260,33 @@ function SettingsPanel(props) {
 
   return (
 
-    <div className = {"settings-panel-super-container light " + (props.showVal ? "shown" : "hidden")}>
-      <div className = "settings-panel-container light">
-        <div className = "settings-panel-header light">
+    <div className = {"settings-panel-super-container " + (props.showVal ? "shown" : "hidden") + " "+ props.theme}>
+      <div className = {"settings-panel-container "+props.theme}>
+        <div className = {"settings-panel-header "+props.theme}>
         Settings
         </div>
 
-        <div className = "settings-panel-close-button-container light" onClick = {() => props.onClose()}>
+        <div className = {"settings-panel-close-button-container "+props.theme} onClick = {() => props.onClose()}>
           <div>
             x
           </div>
         </div>
 
-        <div className = "settings-panel-theme-container light">
-          <div className = "settings-panel-theme-header light">
+        <div className = {"settings-panel-theme-container "+props.theme}>
+          <div className = {"settings-panel-theme-header "+props.theme}>
           Theme
           </div>
 
-          <input type="radio" id="light-radio" onClick = {() => props.handleThemeChangeHandler("light")} className="settings-panel-theme-radio light" name="themes" value="light" defaultChecked/><label htmlFor="light-radio" className="settings-panel-theme-label">Light Theme</label><br />
-          <input type="radio" id="dark-radio" onClick = {() => props.handleThemeChangeHandler("dark")} className="settings-panel-theme-radio light" name="themes"  value="dark"/><label htmlFor="dark-radio" className="settings-panel-theme-label">Dark Theme</label>
+          <input type="radio" id="light-radio" onClick = {() => props.handleThemeChangeHandler("light")} className="settings-panel-theme-radio light" name="themes" value="light" defaultChecked/><label htmlFor="light-radio" className={"settings-panel-theme-label "+props.theme}>Light Theme</label><br />
+          <input type="radio" id="dark-radio" onClick = {() => props.handleThemeChangeHandler("dark")} className="settings-panel-theme-radio light" name="themes"  value="dark"/><label htmlFor="dark-radio" className={"settings-panel-theme-label "+props.theme}>Dark Theme</label>
         </div>
 
-        <div className="settings-panel-get-board-string-container light">
+        <div className={"settings-panel-get-board-string-container "+props.theme}>
           <div className="settings-panel-get-board-string-header light">
           Export
           </div>
-          <button className = "settings-panel-get-board-string-button light" onClick = {() => props.handleExportClicks()} >Get String</button>
-          <input type="text" className = "settings-panel-get-board-string-input light" defaultValue={props.sudokuStringCode == "" ? "" : "String: "+props.sudokuStringCode}/>
+          <button className = {"settings-panel-get-board-string-button " + props.theme} onClick = {() => props.handleExportClicks()} >Get String</button>
+          <input type="text" className = {"settings-panel-get-board-string-input "+props.theme} defaultValue={props.sudokuStringCode == "" ? "" : "String: "+props.sudokuStringCode}/>
 
         </div>
       </div>
@@ -406,7 +406,7 @@ class Game extends React.Component{
           </div>
           <footer className="light">Made by Alejandro Breen</footer>
         </div>
-        <SettingsPanel handleThemeChangeHandler = {(i) => this.handleThemeChange(i)} handleExportClicks = {() => this.handleExportClick()} sudokuStringCode = {this.state.sudokuStringCode} showVal = {presentSettingsPanel} onClose = {() => this.handleCloseSettingsClick()}/>
+        <SettingsPanel className = "light" theme = {this.state.colorTheme} handleThemeChangeHandler = {(i) => this.handleThemeChange(i)} handleExportClicks = {() => this.handleExportClick()} sudokuStringCode = {this.state.sudokuStringCode} showVal = {presentSettingsPanel} onClose = {() => this.handleCloseSettingsClick()}/>
       </div>
     );
   }

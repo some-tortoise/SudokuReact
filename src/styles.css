@@ -558,9 +558,16 @@ input[type=text]:focus{
   bottom:0;
   left:0;
   right:0;
-  background-color: #FFFFFFAA;
   position: absolute;
   z-index: 0;
+}
+
+.settings-panel-super-container.light{
+  background-color: #FFFFFFAA;
+}
+
+.settings-panel-super-container.dark{
+  background-color: #000000AA;
 }
 
 .settings-panel-container{
@@ -569,12 +576,19 @@ input[type=text]:focus{
   position: absolute;
   top: 50%;
   left: 50%;
-
   margin: -300px 0 0 -600px;
-  background-color: #FFF;
   border-radius: 20px;
-  border: 10px solid #DDD;
   box-shadow: 0px 0px 50px grey;
+}
+
+.settings-panel-container.light{
+  background-color: #FFF;
+  border: 10px solid #DDD;
+}
+
+.settings-panel-container.dark{
+  background-color: #202124;
+  border: 5px solid #111;
 }
 
 .settings-panel-header{
@@ -583,12 +597,20 @@ input[type=text]:focus{
   margin-bottom: 0px;
   padding-bottom: 20px;
   font-weight: bold;
+}
+
+.settings-panel-header.light{
+  color: black;
   border-bottom: 1px solid black;
+}
+
+.settings-panel-header.dark{
+  color: #EEE;
+  border-bottom: 1px solid white;
 }
 
 .settings-panel-close-button-container{
   position: absolute;
-  background-color: white;
   width: 70px;
   height: 70px;
   right: 0px;
@@ -597,8 +619,17 @@ input[type=text]:focus{
   border-radius: 100%;
   display: flex;
   align-items: center;
-  box-shadow: 0px 0px 10px #EEE;
   cursor: pointer;
+}
+
+.settings-panel-close-button-container.light{
+  background-color: white;
+  box-shadow: 0px 0px 10px #EEE;
+}
+
+.settings-panel-close-button-container.dark{
+  background-color: black;
+  box-shadow: 0px 0px 10px #EEE;
 }
 
 .settings-panel-close-button-container > *{
@@ -611,14 +642,29 @@ input[type=text]:focus{
   margin-left: -20px;
 }
 
+.settings-panel-close-button-container.light > *{
+  color: black;
+}
+
+.settings-panel-close-button-container.dark > *{
+  color: white;
+}
+
 .settings-panel-theme-container{
   margin: 20px;
 }
 
 .settings-panel-theme-header{
-  color: darkblue;
   font-size: 20px;
   margin-bottom: 15px;
+}
+
+.settings-panel-theme-header.light{
+  color: darkblue;
+}
+
+.settings-panel-theme-header.dark{
+  color: #b5bfff;
 }
 
 .settings-panel-theme-radio{
@@ -631,12 +677,26 @@ input[type=text]:focus{
   cursor: pointer;
 }
 
+.settings-panel-theme-label.light{
+  color: black;
+}
+
+.settings-panel-theme-label.dark{
+  color: white;
+}
 
 .settings-panel-get-board-string-header{
-  color: darkblue;
   font-size: 20px;
   margin: 20px;
   margin-bottom: 15px;
+}
+
+.settings-panel-get-board-string-header.light{
+  color: darkblue;
+}
+
+.settings-panel-get-board-string-header.dark{
+  color: #b5bfff;
 }
 
 .settings-panel-get-board-string-input{
@@ -648,16 +708,35 @@ input[type=text]:focus{
   font-weight: bold;
 }
 
+.settings-panel-get-board-string-input.light{
+  color: black;
+  background-color: white;
+}
+
+.settings-panel-get-board-string-input.dark{
+  color: white;
+  background-color: #202124;
+}
+
 .settings-panel-get-board-string-button{
-  background-color: #EEE;
   border: none;
-  color: #1272e3;
   font-weight: bold;
   width: 100px;
   height: 30px;
   margin-left: 20px;
   border-radius: 5px;
   display: block;
+}
+
+.settings-panel-get-board-string-button.light{
+  background-color: #EEE;
+  color: #1272e3;
+}
+
+
+.settings-panel-get-board-string-button.dark{
+  background-color: #49ba5a;
+  color: #000;
 }
 
 .settings-panel-get-board-string-button:hover{
