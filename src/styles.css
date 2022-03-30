@@ -446,6 +446,7 @@ table.sudoku-grid.no-spacing {
 
 .baseValue.light{
   color: #000;
+  background-color: #F1F1F1;
 }
 
 .baseValue.dark{

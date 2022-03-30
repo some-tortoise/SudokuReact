@@ -3,7 +3,6 @@
 TO-DO:
 1. Make solve screen nicer
 2. Create timer and add option for timer in settings
-3. Add dark mode
 
 */
 
@@ -307,6 +306,7 @@ class Game extends React.Component{
   }
 
   newBoardClick(){
+    $(".sudoku-grid-td").removeClass("justHinted");
     this.setState({
       showDifficultyPanel: !this.state.showDifficultyPanel,
     });
@@ -321,7 +321,8 @@ class Game extends React.Component{
   }
 
   handleDifficultyClick(difficulty){
-    console.log(difficulty);
+    $(".sudoku-grid-td").removeClass("wrong");
+    $(".square").removeClass("wrong");
     if(difficulty == "Easy"){
       board.generateBoard(5);
     }else if(difficulty == "Medium"){
